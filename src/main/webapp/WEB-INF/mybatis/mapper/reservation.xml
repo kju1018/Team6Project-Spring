@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="euc-kr" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mycompany.webapp.dao.ReservationsDao">
+
+<!-- 특정예약 불러오기 -->
+<select id="selectByRservationid" parameterType="string">
+	select *
+	from reservations 
+	where reservationid=#{reservationid}
+</select>
+
+<!-- 전체 예약 불러오기 -->
+<select id="selectAll" resultType="reservation">
+	select*
+	from reservations 
+</select> 
+
+<!-- 예약삭제 -->
+<delete id="deleteByReservationid">
+	delete from reservations
+	where reservationid=#{reservationid}
+</delete>
+
+<!-- 예약등록 -->
+<insert id="insert" parameterType="reservation">
+	insert into reservations
+   	(reservationid, reservationdate, patientid, status, type)
+   	values
+   	(#{reservationid}, #{reservationdate}, #{bcontent}, #{bwriter}, sysdate, 0) 
+</insert>
+
+
+</mapper>

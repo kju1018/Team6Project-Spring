@@ -4,5 +4,6 @@
 <configuration>
    <typeAliases>
    	 <typeAlias type="com.mycompany.webapp.dto.User" alias="user"/> 
+   	 <typeAlias type="com.mycompany.webapp.dto.Reservation" alias="reservation"/> 
    </typeAliases>
 </configuration>

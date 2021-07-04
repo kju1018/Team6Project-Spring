@@ -3,23 +3,4 @@
 <mapper namespace="com.mycompany.webapp.dao.UsersDao">
 
 
- <resultMap id="userResultMap" type="user">
-  <id property="uid" column="userid" />
-  <result property="uname" column="username"/>
-  <result property="upassword" column="userpassword"/>
-  <result property="uauthority" column="role_authority"/>
-  <result property="uenabled" column="userenabled"/>
-</resultMap>
-
-<select id="selectByUid" parameterType="string" resultMap="userResultMap">
-	select userid, username, userpassword, role_authority, userenabled
-	from users 
-	where userid=#{uid}
-</select>
-
-<select id="selectAll" resultMap="userResultMap">
-	select*
-	from users
-	where userid=1
-</select> 
 </mapper>
