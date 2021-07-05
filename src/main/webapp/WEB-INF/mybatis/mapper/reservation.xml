@@ -22,11 +22,11 @@
 </delete>
 
 <!-- 예약등록 -->
-<insert id="insert" parameterType="reservation">
+<insert id="insert" parameterType="reservation"  useGeneratedKeys="true" keyProperty="reservationid">
 	insert into reservations
    	(reservationid, reservationdate, patientid, status, type)
    	values
-   	(#{reservationid}, #{reservationdate}, #{bcontent}, #{bwriter}, sysdate, 0) 
+   	(#{reservationid}, #{reservationdate}, #{patientid}, #{status}, #{type}) 
 </insert>
 
 

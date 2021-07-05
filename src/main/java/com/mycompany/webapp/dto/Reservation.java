@@ -2,8 +2,11 @@ package com.mycompany.webapp.dto;
 
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 public class Reservation {
 	int reservationid;
+	@JsonFormat(pattern="yyyy-MM-dd")
 	Date reservationdate;
 	String status;
 	String type;

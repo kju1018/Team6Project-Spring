@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.mycompany.webapp.dao.ReservationsDao;
+import com.mycompany.webapp.dto.Patient;
 import com.mycompany.webapp.dto.Reservation;
 
 
@@ -13,8 +14,13 @@ import com.mycompany.webapp.dto.Reservation;
 public class ReservationsService {
 	@Autowired
 	private ReservationsDao reservationsDao;
-
-	public List<Reservation> getReservationDatas() {
+	
+	//예약 정보등록
+	public int RegisterReservation(Reservation reservation) {
+		return reservationsDao.insert(reservation);
+	}
+	//전체 예약정보 가져오기
+	public List<Reservation> getReservationList() {
 		return reservationsDao.selectAll();
 	}
 }
