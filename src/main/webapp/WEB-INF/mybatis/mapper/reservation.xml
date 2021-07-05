@@ -13,10 +13,11 @@
 <select id="selectAll" resultType="reservation">
 	select*
 	from reservations 
+	order by reservationdate asc
 </select> 
 
 <!-- 예약삭제 -->
-<delete id="deleteByReservationid">
+<delete id="deleteByReservationid" parameterType="int">
 	delete from reservations
 	where reservationid=#{reservationid}
 </delete>
