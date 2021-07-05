@@ -18,4 +18,9 @@ public class DrugsService {
 		
 		return drugsDao.selectAll();
 	}
+	
+	public List<Drug> getDrugsByTreatmentId(int treatmentid) {
+		
+		return drugsDao.selectByTreatmentId(treatmentid);
+	}
 }
