@@ -4,5 +4,15 @@
 <configuration>
    <typeAliases>
    	 <typeAlias type="com.mycompany.webapp.dto.User" alias="user"/> 
+   	 <typeAlias type="com.mycompany.webapp.dto.Reservation" alias="reservation"/>
+   	 <typeAlias type="com.mycompany.webapp.dto.Patient" alias="patient"/> 
+   	 <typeAlias type="com.mycompany.webapp.dto.Notice" alias="notice"/>
+     <typeAlias type="com.mycompany.webapp.dto.Schedule" alias="schedule"/> 
+     <typeAlias type="com.mycompany.webapp.dto.Drug" alias="drug"/>
+     <typeAlias type="com.mycompany.webapp.dto.Diagnoses" alias="diagnoses"/>
+     <typeAlias type="com.mycompany.webapp.dto.Treatment" alias="treatment"/>
+     <typeAlias type="com.mycompany.webapp.dto.Test" alias="test"/>
+   	<typeAlias type="com.mycompany.webapp.dto.TestReception" alias="testreception"/>
+   	<typeAlias type="com.mycompany.webapp.dto.TestData" alias="testdata"/>
    </typeAliases>
 </configuration>
