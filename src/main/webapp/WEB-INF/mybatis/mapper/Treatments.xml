@@ -7,6 +7,23 @@
 		select treatmentid, memo, treatmentdate, patientid, userid, status
 		from treatments
 		where patientid=#{patientid}
+		order by treatmentdate desc
 	</select>
+	
+	<insert id="insert" useGeneratedKeys="true" keyProperty="treatmentid" parameterType="treatment">
+		insert into treatments
+		(memo, treatmentdate, patientid, userid, status)	
+		values
+		(#{memo}, #{treatmentdate}, #{patientid}, #{userid}, #{status})
+		
+	</insert>
+	
+	<delete id="delete">
+		delete from treatments where treatmentid = #{treatmentid}
+	</delete>
+	
+	<update id="update" parameterType="treatment">
+		update treatments set status = #{status} where treatmentid = ${treatmentid}
+	</update>
 
 </mapper>

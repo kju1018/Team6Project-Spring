@@ -9,4 +9,5 @@ import com.mycompany.webapp.dto.Drug;
 @Mapper
 public interface DrugsDao {
 	public List<Drug> selectAll();
+	public List<Drug> selectByTreatmentId(int treatmentid);
 }

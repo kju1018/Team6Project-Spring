@@ -7,5 +7,12 @@
 		select drugid, drugname, drugtype, drugunit
 		from drugsdatas 
 	</select>
+	
+	<select id="selectByTreatmentId" resultType="drug">
+		select d.drugid, drugname, drugtype, drugunit, treatmentid, quantity
+		from drugsdatas dt, drugs d
+		where dt.drugid = d.drugid and d.treatmentid = #{treatmentid}
+	</select>
+	
 
 </mapper>
