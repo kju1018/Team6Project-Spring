@@ -14,5 +14,11 @@
 		where dt.drugid = d.drugid and d.treatmentid = #{treatmentid}
 	</select>
 	
+	<insert id="insertList" parameterType="list">
+		insert into drugs(treatmentid, quantity, drugid) values
+		<foreach collection="list" item="drug" separator=",">
+		 	(#{drug.treatmentid}, #{drug.quantity}, #{drug.drugid})
+		</foreach>
+	</insert>
 
 </mapper>

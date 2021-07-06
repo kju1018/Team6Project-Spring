@@ -1,5 +1,7 @@
 package com.mycompany.webapp.controller;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -18,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mycompany.webapp.dto.Diagnoses;
 import com.mycompany.webapp.dto.Drug;
@@ -78,17 +81,21 @@ public class TreatmentsController {
 	
 	//처방받은 내역 저장
 	@PostMapping("/prescribetreatment")
-	public String prescribereatment(@RequestBody Map prescription) {
+	public String prescribereatment(@RequestBody HashMap prescription) {
 		ObjectMapper mapper = new ObjectMapper();
+		List<Drug> drugList = mapper.convertValue(prescription.get("treatmentDrugs"), new TypeReference<List<Drug>>() { });
+		List<Diagnoses> diagnosesList = mapper.convertValue(prescription.get("treatmentDiagnoses"), new TypeReference<List<Diagnoses>>() { });
+//		List<Test> testList = mapper.convertValue(prescription.get("treatmentTests"), new TypeReference<List<Test>>() { });
+		Treatment nowTreatment = mapper.convertValue(prescription.get("treatment"), Treatment.class);
 		
+
+		drugsService.insertDrugList(drugList);
+		diagnosesService.insertDiagnosesList(diagnosesList);
+//		testsService.insertTestList(testList);
 		
-		List<Drug> drugList = (List<Drug>) prescription.get("treatmentDrugs");
-		List<Diagnoses> diagnosesList = (List<Diagnoses>) prescription.get("treatmentDiagnoses");
-		Drug drug = drugList.get(0);
-		System.out.println(drug);
-		System.out.println(diagnosesList.toString());
-		
-		return "";
+		nowTreatment.setStatus("진료 완료");
+		treatmentsService.updateStatus(nowTreatment);
+		return "success";
 	}
 	
 	//정적 데이터 관련-----------------------
