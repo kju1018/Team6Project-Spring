@@ -40,6 +40,7 @@ public class ReceptionController {
 	@GetMapping("/reservationlist")
 	public List<Reservation> ReservationList() {
 		List<Reservation> list= reservationservice.getReservationList();	
+		System.out.println(list.get(0));
 		return list;
 	}
 	//예약정보 등록하기
@@ -79,7 +80,12 @@ public class ReceptionController {
 		System.out.println(obj);
 		return reservationservice.RemoveReservation(obj.get("reservationid"));
 	}
-	
+	//예약정보 수정하기
+	@PutMapping("/updatereservation")
+	public int UpdateReservation(@RequestBody Reservation reservation) {
+		reservationservice.UpdateReservation(reservation);
+		return reservation.getReservationid();
+	}
 	
 	//전체 환자정보 가져오기
 	@GetMapping("/patientlist")

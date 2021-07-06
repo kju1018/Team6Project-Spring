@@ -9,10 +9,11 @@
 	where reservationid=#{reservationid}
 </select>
 
-<!-- 전체 예약 불러오기 -->
+<!-- 전체 예약 불러오기 + join으로 환자이름 추가 -->
 <select id="selectAll" resultType="reservation">
-	select*
-	from reservations 
+	select r.reservationid, r.reservationdate, r.status,r.type,r.patientid, p.patientname
+	from reservations r, patients p
+	where r.patientid = p.patientid 
 	order by reservationdate asc
 </select> 
 
@@ -30,5 +31,12 @@
    	(#{reservationid}, #{reservationdate}, #{patientid}, #{status}, #{type}) 
 </insert>
 
+<!-- 예약수정 -->
+<update id="update" parameterType="reservation">
+	update reservations set
+	reservationdate=#{reservationdate},
+	type=#{type}
+	where reservationid=#{reservationid}
+</update>
 
 </mapper>

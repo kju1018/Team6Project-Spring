@@ -11,7 +11,14 @@ public class Reservation {
 	String status;
 	String type;
 	int patientid;
+	String patientname;
 	
+	public String getPatientname() {
+		return patientname;
+	}
+	public void setPatientname(String patientname) {
+		this.patientname = patientname;
+	}
 	public int getReservationid() {
 		return reservationid;
 	}
