@@ -10,4 +10,5 @@ import com.mycompany.webapp.dto.Drug;
 public interface DrugsDao {
 	public List<Drug> selectAll();
 	public List<Drug> selectByTreatmentId(int treatmentid);
+	public int insertList(List<Drug> drugList);
 }

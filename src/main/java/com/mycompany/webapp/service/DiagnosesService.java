@@ -25,5 +25,13 @@ public class DiagnosesService {
 		
 		return diagnosesDao.selectByTreatmentId(treatmentid);
 	}
+	
+	public int insertDiagnosesList(List<Diagnoses> diagnosesList) {
+		int row = 0;
+		if(diagnosesList.size()>0) {
+			row = diagnosesDao.insertList(diagnosesList);
+		}
+		return row;
+	}
 
 }
