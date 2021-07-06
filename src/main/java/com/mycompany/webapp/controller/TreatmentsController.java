@@ -8,6 +8,7 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -74,6 +75,13 @@ public class TreatmentsController {
 		return map;
 	}
 	
+	//처방받은 내역 저장
+	@PostMapping("/prescribetreatment")
+	public String prescribereatment(@RequestBody Map<String, List> prescription) {
+		System.out.println(prescription.toString());
+		return "";
+	}
+	
 	//정적 데이터 관련-----------------------
 	@GetMapping("/staticdrugs")
 	public List<Drug> getStaticDrugList() {
@@ -86,7 +94,7 @@ public class TreatmentsController {
 		List<Diagnoses> staticDiagnosesList = diagnosesService.getStaticDiagnoses();
 		return staticDiagnosesList;
 	}
-//	------------------------------------
+	//------------------------------------
 	
 	//환자 불러오기-----------------------
 	@GetMapping("/getpatientList")
