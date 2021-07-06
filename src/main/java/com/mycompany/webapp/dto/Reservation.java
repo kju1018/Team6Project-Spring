@@ -6,12 +6,19 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 public class Reservation {
 	int reservationid;
-	@JsonFormat(pattern="yyyy-MM-dd")
+	@JsonFormat(pattern="yyyy-MM-dd HH:mm", timezone = "Asia/Seoul")
 	Date reservationdate;
 	String status;
 	String type;
 	int patientid;
+	String patientname;
 	
+	public String getPatientname() {
+		return patientname;
+	}
+	public void setPatientname(String patientname) {
+		this.patientname = patientname;
+	}
 	public int getReservationid() {
 		return reservationid;
 	}

@@ -16,14 +16,14 @@ public class SimpleCORSFilter implements Filter {
  
     public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws IOException, ServletException {
         HttpServletResponse response = (HttpServletResponse) res;
-        response.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE");
+        response.setHeader("Access-Control-Allow-Methods", "POST, GET,PUT, OPTIONS, DELETE");
         response.setHeader("Access-Control-Allow-Headers", "content-type, authtoken");
         response.setHeader("Access-Control-Max-Age", "3600");
-        // �����?: ���� ����ϴ���?
+        // �����?: ���� ����ϴ���?
         response.setHeader("Access-Control-Allow-Credentials", "true");
         
         response.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
-        // �����?: �Ʒ� 3���� �����θ� ����ϴ���?
+        // �����?: �Ʒ� 3���� �����θ� ����ϴ���?
         // response.addHeader("Access-Control-Allow-Origin", "http://S1.ABC.co.kr");
         // response.addHeader("Access-Control-Allow-Origin", "http://S2.ABC.co.kr");
         // response.addHeader("Access-Control-Allow-Origin", "http://S3.ABC.co.kr");

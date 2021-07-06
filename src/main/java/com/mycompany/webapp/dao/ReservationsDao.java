@@ -10,7 +10,8 @@ import com.mycompany.webapp.dto.Reservation;
 	@Mapper
 	public interface ReservationsDao {
 		public int insert(Reservation reservation);
-
+		public int deleteByReservationid(int reservationid);
+		public int update(Reservation reservation);
 		public List<Reservation> selectAll();
 	}
 
