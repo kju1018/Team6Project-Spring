@@ -27,4 +27,8 @@ public class ReservationsService {
 	public int RemoveReservation(int reservationid) {
 		return reservationsDao.deleteByReservationid(reservationid);
 	}
+	//예약정보 수정
+	public int UpdateReservation(Reservation reservation) {
+		return reservationsDao.update(reservation);
+	}
 }
