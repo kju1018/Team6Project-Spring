@@ -23,4 +23,12 @@ public class DrugsService {
 		
 		return drugsDao.selectByTreatmentId(treatmentid);
 	}
+	
+	public int insertDrugList(List<Drug> drugList) {
+		int row=0;
+		if(drugList.size()>0) {
+			row = drugsDao.insertList(drugList);
+		}
+		return row;
+	}
 }

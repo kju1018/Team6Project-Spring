@@ -10,5 +10,6 @@ import com.mycompany.webapp.dto.Diagnoses;
 public interface DiagnosesDao {
 	public List<Diagnoses> selectAll();
 	public List<Diagnoses> selectByTreatmentId(int treatmentid);
+	public int insertList(List<Diagnoses> diagnosesList);
 
 }
