@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mycompany.webapp.dao.TestReceptionsDao">
+
+	<insert id="testReceptionInsert" parameterType="testreception">
+		insert into testrecptions 
+		(testreceptionid, testdate, status, patientid)
+		values
+		(#{testreceptionid},sysdate, #{status}, #{patientid})
+	</insert>
+	
+	<delete id="deleteByReceptionid" parameterType="int">
+      delete from testreceptions where testreceptionid=#{testreceptionid}
+   </delete>
+   
+    <!-- 왼쪽에 date별로 리스트 목록 불러오기 -->
+	<select id="selectbyTestdate" parameterType="String" resultType="testreception">
+		select testreceptionid, testdate, status, tr.patientid, patientname, ssn1, sex
+		from testreceptions tr, patients p
+  	    where testdate between #{startdate} AND #{enddate}
+	</select>
+	
+	<!-- 해당 환자 클릭 시, 과거 검사 내역 -->
+	<select id="selectbyPatientid" parameterType="testreception" resultType="testreception">
+		select testreceptionid, testdate, status, tr.patientid, patientname, ssn1, sex
+		from testreceptions tr, patients p
+  	    where tr.patientid = #{patientid}
+	</select>
+	
+	<!-- <select id="selectbyAll" resultType="testreception">
+  		select testreceptionid, testdate, status, patientid
+		from testrecptions
+  	</select> -->
+</mapper>
