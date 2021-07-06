@@ -9,5 +9,6 @@ import com.mycompany.webapp.dto.Diagnoses;
 @Mapper
 public interface DiagnosesDao {
 	public List<Diagnoses> selectAll();
+	public List<Diagnoses> selectByTreatmentId(int treatmentid);
 
 }

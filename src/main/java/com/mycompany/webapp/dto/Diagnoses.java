@@ -29,6 +29,12 @@ public class Diagnoses {
 	public void setTreatmentid(int treatmentid) {
 		this.treatmentid = treatmentid;
 	}
+	@Override
+	public String toString() {
+		return "Diagnoses [diagnosesdataid=" + diagnosesdataid + ", diagnosesdataname=" + diagnosesdataname
+				+ ", diagnosesdataename=" + diagnosesdataename + ", treatmentid=" + treatmentid + "]";
+	}
+	
 	
 	
 }

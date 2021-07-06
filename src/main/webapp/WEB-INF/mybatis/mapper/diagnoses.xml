@@ -7,5 +7,12 @@
 		select diagnosesdataid, diagnosesdataname, diagnosesdataename
 		from diagnosesdatas 
 	</select>
+	
+	<select id="selectByTreatmentId" resultType="diagnoses">
+		select d.diagnosesdataid, diagnosesdataname, diagnosesdataename, treatmentid
+		from diagnosesdatas dt, diagnoses d
+		where dt.diagnosesdataid = d.diagnosesdataid and d.treatmentid = #{treatmentid}
+	</select>
+	
 
 </mapper>

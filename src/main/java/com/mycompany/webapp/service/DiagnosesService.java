@@ -19,5 +19,11 @@ public class DiagnosesService {
 		
 		return diagnosesDao.selectAll();
 	}
+	
+	
+	public List<Diagnoses> getDiagnosesByTreatmentId(int treatmentid) {
+		
+		return diagnosesDao.selectByTreatmentId(treatmentid);
+	}
 
 }

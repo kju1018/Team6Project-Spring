@@ -18,4 +18,17 @@ public class TreatmentsService {
 		return treatmentsDao.selectByPatientId(patientid);
 	}
 	
+	public Treatment create(Treatment treatment) {
+		treatmentsDao.insert(treatment);
+		return treatment;
+	}
+	
+	public int deleteTreatment(int treatmentid) {
+		 return treatmentsDao.delete(treatmentid);
+	}
+	
+	public int updateStatus(Treatment treatment) {
+		return treatmentsDao.update(treatment);
+	}
+	
 }
