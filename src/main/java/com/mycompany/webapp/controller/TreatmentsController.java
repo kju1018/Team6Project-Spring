@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mycompany.webapp.dto.Diagnoses;
 import com.mycompany.webapp.dto.Drug;
 import com.mycompany.webapp.dto.Patient;
@@ -77,8 +78,16 @@ public class TreatmentsController {
 	
 	//처방받은 내역 저장
 	@PostMapping("/prescribetreatment")
-	public String prescribereatment(@RequestBody Map<String, List> prescription) {
-		System.out.println(prescription.toString());
+	public String prescribereatment(@RequestBody Map prescription) {
+		ObjectMapper mapper = new ObjectMapper();
+		
+		
+		List<Drug> drugList = (List<Drug>) prescription.get("treatmentDrugs");
+		List<Diagnoses> diagnosesList = (List<Diagnoses>) prescription.get("treatmentDiagnoses");
+		Drug drug = drugList.get(0);
+		System.out.println(drug);
+		System.out.println(diagnosesList.toString());
+		
 		return "";
 	}
 	
