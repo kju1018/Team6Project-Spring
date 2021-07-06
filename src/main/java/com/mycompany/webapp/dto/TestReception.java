@@ -10,6 +10,50 @@ public class TestReception {
 	private Date testdate;
 	private String status;
 	private int patientid;
+	private String startdate;
+	private String enddate;
+	public String getStartdate() {
+		return startdate;
+	}
+	public void setStartdate(String startdate) {
+		this.startdate = startdate;
+	}
+	public String getEnddate() {
+		return enddate;
+	}
+	public void setEnddate(String enddate) {
+		this.enddate = enddate;
+	}
+	private String patientname;
+	private String ssn1;
+	private String sex;
+	private int age;
+	
+	
+	public String getPatientname() {
+		return patientname;
+	}
+	public void setPatientname(String patientname) {
+		this.patientname = patientname;
+	}
+	public String getSsn1() {
+		return ssn1;
+	}
+	public void setSsn1(String ssn1) {
+		this.ssn1 = ssn1;
+	}
+	public String getSex() {
+		return sex;
+	}
+	public void setSex(String sex) {
+		this.sex = sex;
+	}
+	public int getAge() {
+		return age;
+	}
+	public void setAge(int age) {
+		this.age = age;
+	}
 	public int getTestreceptionid() {
 		return testreceptionid;
 	}
