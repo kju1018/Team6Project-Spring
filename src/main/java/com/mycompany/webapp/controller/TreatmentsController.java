@@ -25,10 +25,14 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mycompany.webapp.dto.Diagnoses;
 import com.mycompany.webapp.dto.Drug;
 import com.mycompany.webapp.dto.Patient;
+import com.mycompany.webapp.dto.Test;
+import com.mycompany.webapp.dto.TestData;
 import com.mycompany.webapp.dto.Treatment;
 import com.mycompany.webapp.service.DiagnosesService;
 import com.mycompany.webapp.service.DrugsService;
 import com.mycompany.webapp.service.PatientsService;
+import com.mycompany.webapp.service.TestDatasService;
+import com.mycompany.webapp.service.TestsService;
 import com.mycompany.webapp.service.TreatmentsService;
 
 @RestController
@@ -48,6 +52,9 @@ public class TreatmentsController {
 	
 	@Autowired
 	private PatientsService patientsService;
+	
+	@Autowired
+	private TestDatasService testDatasService;
 	
 	@DeleteMapping("/test")
 	public String test() {
@@ -88,13 +95,13 @@ public class TreatmentsController {
 //		List<Test> testList = mapper.convertValue(prescription.get("treatmentTests"), new TypeReference<List<Test>>() { });
 		Treatment nowTreatment = mapper.convertValue(prescription.get("treatment"), Treatment.class);
 		
-
-		drugsService.insertDrugList(drugList);
-		diagnosesService.insertDiagnosesList(diagnosesList);
+		logger.info(nowTreatment.toString());
+//		drugsService.insertDrugList(drugList);
+//		diagnosesService.insertDiagnosesList(diagnosesList);
 //		testsService.insertTestList(testList);
 		
-		nowTreatment.setStatus("진료 완료");
-		treatmentsService.updateStatus(nowTreatment);
+		/*		nowTreatment.setStatus("진료 완료");
+				treatmentsService.updateStatus(nowTreatment);*/
 		return "success";
 	}
 	
@@ -109,6 +116,13 @@ public class TreatmentsController {
 	public List<Diagnoses> getStaticDiagnosesList() {
 		List<Diagnoses> staticDiagnosesList = diagnosesService.getStaticDiagnoses();
 		return staticDiagnosesList;
+	}
+	
+	@GetMapping("/statictests")
+	public List<TestData> getStaticTestList() {
+//		List<TestData> staticTests = testDatasService.getTestDataList();
+//		logger.info(staticTests.toString());
+		return null;
 	}
 	//------------------------------------
 	
