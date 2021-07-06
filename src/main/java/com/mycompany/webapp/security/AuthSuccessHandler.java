@@ -1,4 +1,4 @@
-package com.mycompany.webapp.util;
+package com.mycompany.webapp.security;
 
 import java.io.IOException;
 

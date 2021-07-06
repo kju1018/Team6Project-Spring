@@ -47,19 +47,27 @@
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
 	
-		
+<!-- 	<filter>
+		<filter-name>cors</filter-name>
+		<filter-class>com.mycompany.webapp.security.SimpleCORSFilter</filter-class>
+	</filter>
+	<filter-mapping>
+	    <filter-name>cors</filter-name>
+	    <url-pattern>/*</url-pattern>
+	</filter-mapping> -->
 	
-<filter>
-<filter-name>cors</filter-name>
-<filter-class>com.mycompany.webapp.util.SimpleCORSFilter</filter-class>
-</filter>
-<filter-mapping>
-    <filter-name>cors</filter-name>
-    <url-pattern>/*</url-pattern>
-</filter-mapping>
+	<!-- Spring Security 설정 --> 
+	<filter>
+		<filter-name>springSecurityFilterChain</filter-name>
+		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>springSecurityFilterChain</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	 
  
- 
-<filter>
+<!-- <filter>
 <filter-name>jwt</filter-name>
 <filter-class>com.mycompany.webapp.util.JwtAuthenticationFilter</filter-class>
 </filter>
@@ -67,17 +75,8 @@
     <filter-name>jwt</filter-name>
     <url-pattern>/*</url-pattern>
 </filter-mapping> 
+ -->
 
-<!-- Spring Security 설정 -->
-	 <!-- <filter>
-		<filter-name>springSecurityFilterChain</filter-name>
-		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
-	</filter>
-	<filter-mapping>
-		<filter-name>springSecurityFilterChain</filter-name>
-		<url-pattern>/*</url-pattern>
-	</filter-mapping> 
-	 -->
 	
 </web-app>
 

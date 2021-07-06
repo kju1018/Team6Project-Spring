@@ -13,7 +13,7 @@ import com.mycompany.webapp.dao.UsersDao;
 import com.mycompany.webapp.dto.User;
 
 @Service
-public class UsersService implements UserDetailsService {
+public class UsersService {
 	
 	@Autowired
 	private UsersDao usersDao;
@@ -38,16 +38,16 @@ public class UsersService implements UserDetailsService {
 		}
 		
 	}
-	@Override
-	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		// TODO Auto-generated method stub
-		User dbUser = usersDao.selectByUid(username);
-		UserDetails loginUser = null;
-		java.util.List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
-		authorities.add(new SimpleGrantedAuthority(dbUser.getUauthority()));
-		loginUser = new org.springframework.security.core.userdetails.User(dbUser.getUid(), dbUser.getUpassword() ,authorities);
-		System.out.println("load" + loginUser.getAuthorities());
-		return loginUser;
-	}
+	/*	@Override
+		public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+			// TODO Auto-generated method stub
+			User dbUser = usersDao.selectByUid(username);
+			UserDetails loginUser = null;
+			java.util.List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
+			authorities.add(new SimpleGrantedAuthority(dbUser.getUauthority()));
+			loginUser = new org.springframework.security.core.userdetails.User(dbUser.getUid(), dbUser.getUpassword() ,authorities);
+			System.out.println("load" + loginUser.getAuthorities());
+			return loginUser;
+		}*/
 
 }
