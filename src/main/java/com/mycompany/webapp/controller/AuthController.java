@@ -5,10 +5,14 @@ import java.util.HashMap;
 
 import java.util.Map;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,32 +24,34 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.mycompany.webapp.dto.User;
-
+import com.mycompany.webapp.security.JwtUtil;
 import com.mycompany.webapp.service.UsersService;
-import com.mycompany.webapp.util.JwtUtil;
 
 @RestController
-@RequestMapping("/Auth")
+@RequestMapping("/auth")
 public class AuthController {
-	@Autowired
-	private UsersService usersService;
-
-	@PostMapping(value="/login")
-	public Map<String, String> login(@RequestBody Map<String,Object> json,HttpSession session, Authentication auth) {
+	@Resource(name="daoAuthenticationManager")
+	private AuthenticationManager authenticationManager;
+	
+	
+	@PostMapping("/login")
+	public Map<String, String> userlogin(@RequestBody Map<String, String> user) {
+		String uid = user.get("userid");
+		String upassword = user.get("userpassword");
 		
-		User user = new User();
-		user.setUid(json.get("uid").toString());
-		user.setUpassword(json.get("upassword").toString());
-		String result = usersService.login(user); 
-	      Map<String, String> map = new HashMap<String, String>();
-		if(result.equals("success")) {
-			String jwt = JwtUtil.createToken(user.getUid());
-		      map.put("status", "success");
-		      map.put("uid", user.getUid());
-		      map.put("authToken", jwt);
-		}else {
-			map.put("status", result);
-		}
+		//사용자 인증하기
+		UsernamePasswordAuthenticationToken authReq = new UsernamePasswordAuthenticationToken(uid, upassword);
+	    Authentication authentication = authenticationManager.authenticate(authReq);
+	    SecurityContext securityContext = SecurityContextHolder.getContext();
+	    securityContext.setAuthentication(authentication);
+	    
+	    //JWT 토큰 생성
+	    String authToken = JwtUtil.createToken(uid);
+		
+	    //JSON 응답 보내기
+		Map<String, String> map = new HashMap<>();
+		map.put("userid", uid);
+		map.put("authToken", authToken);
 		return map;
 	}
 	
