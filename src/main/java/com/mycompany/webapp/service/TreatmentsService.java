@@ -18,9 +18,9 @@ public class TreatmentsService {
 		return treatmentsDao.selectByPatientId(patientid);
 	}
 	
-	public int create(Treatment treatment) {
+	public Treatment create(Treatment treatment) {
 		int row = treatmentsDao.insert(treatment);
-		return row;
+		return treatment;
 	}
 	
 	public int deleteTreatment(int treatmentid) {
