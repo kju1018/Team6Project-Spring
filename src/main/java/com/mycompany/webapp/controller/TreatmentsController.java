@@ -56,11 +56,19 @@ public class TreatmentsController {
 	@Autowired
 	private TestDatasService testDatasService;
 	
-	@DeleteMapping("/test")
+	@Autowired
+	private TestsService testsService;
+	
+	@PostMapping("/test")
 	public String test() {
 		Treatment treatment = new Treatment();
-		int row = treatmentsService.deleteTreatment(997);
-		System.out.println(row);
+		treatment.setPatientid(1);
+		treatment.setMemo("");
+		treatment.setStatus("진료 대기");
+		treatment.setTreatmentdate(new Date());
+		treatment.setUserid("user1");
+		Treatment newTreatment = treatmentsService.create(treatment);
+		System.out.println(newTreatment);
 		return "test";
 	}
 	
@@ -93,16 +101,20 @@ public class TreatmentsController {
 		List<Drug> drugList = mapper.convertValue(prescription.get("treatmentDrugs"), new TypeReference<List<Drug>>() { });
 		List<Diagnoses> diagnosesList = mapper.convertValue(prescription.get("treatmentDiagnoses"), new TypeReference<List<Diagnoses>>() { });
 		List<Test> testList = mapper.convertValue(prescription.get("treatmentTests"), new TypeReference<List<Test>>() { });
+		
 		Treatment nowTreatment = mapper.convertValue(prescription.get("treatment"), Treatment.class);
 		
-		logger.info(drugList.toString());
-		logger.info(diagnosesList.toString());
-		logger.info(testList.toString());
-		logger.info(nowTreatment.toString());
+		String userid = (String) prescription.get("userid");
+		int patientid = (int) prescription.get("patientid");
+		Map<String, Object> testData = new HashMap<String, Object>();
+		testData.put("testList", testList);
+		testData.put("userid", userid);
+		testData.put("patientid", patientid);
+
 		drugsService.insertDrugList(drugList);
 		diagnosesService.insertDiagnosesList(diagnosesList);
-//		testsService.insertTestList(testList);
-		 
+		testsService.insertTestList(testData);
+		
 		nowTreatment.setStatus("진료 완료");
 		treatmentsService.updateStatus(nowTreatment);
 		return "success";

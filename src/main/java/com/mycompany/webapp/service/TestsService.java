@@ -1,6 +1,7 @@
 package com.mycompany.webapp.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,7 +25,11 @@ public class TestsService {
 		return list;
 	}
 	
-	public void createTest(Test test) { //진료 페이지에서 검사 추가
-		testsDao.insert(test);
+	public int insertTestList(Map<String, Object> testData) { //진료 페이지에서 검사 추가
+		int row = 0;
+		if(((List<Test>) testData.get("testList")).size() > 0 ) {
+			row = testsDao.insertList(testData);
+		}
+		return row;
 	}
 }
