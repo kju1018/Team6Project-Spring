@@ -17,18 +17,13 @@
 	<select id="selectbyTestdate" parameterType="String" resultType="testreception">
 		select testreceptionid, testdate, status, tr.patientid, patientname, ssn1, sex
 		from testreceptions tr, patients p
-  	    where testdate between #{startdate} AND #{enddate}
+  	    where tr.patientid = p.patientid AND testdate between #{startdate} AND #{enddate}
 	</select>
 	
 	<!-- 해당 환자 클릭 시, 과거 검사 내역 -->
-	<select id="selectbyPatientid" parameterType="testreception" resultType="testreception">
-		select testreceptionid, testdate, status, tr.patientid, patientname, ssn1, sex
-		from testreceptions tr, patients p
-  	    where tr.patientid = #{patientid}
+	<select id="selectbyPatientid" parameterType="int" resultType="testreception">
+		select testreceptionid, testdate, status, patientid
+		from testreceptions
+		where patientid = #{patientid}
 	</select>
-	
-	<!-- <select id="selectbyAll" resultType="testreception">
-  		select testreceptionid, testdate, status, patientid
-		from testrecptions
-  	</select> -->
 </mapper>

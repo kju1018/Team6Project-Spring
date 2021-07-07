@@ -34,28 +34,23 @@ public class TestController {
 	
 	@GetMapping("/patientbytestdate")
 	public List<TestReception> getTestReceptionByTestdate (@RequestParam String startdate, @RequestParam String enddate) {
-		System.out.println("dddd" + startdate);
-		
-		logger.info(startdate);
-		logger.info(enddate);
 		List<TestReception> list = testreceptionsService.getTestReceptionListByDate(startdate, enddate);
 		
-		System.out.println("dddd" + list);
 		return list;
-	}
+	} 
 	
-	@GetMapping("/testreceptionbypatientid/{patientid}")
-	public List<TestReception> getTestReceptionListByPatientId (@PathVariable int patientid) {
+	@GetMapping("/testreceptionbypatientid")
+	public List<TestReception> getTestReceptionListByPatientId (@RequestParam int patientid) {
 		List<TestReception> list = testreceptionsService.getTestReceptionListByPatientId(patientid);
-		logger.info("patientid");
+
 		return list;
-	}
+	}  
 	
-	@GetMapping("/testlistbyreceptionid/{testreceptionid}")
-	public List<Test> getTestReceptionListByReceptionId(@PathVariable int testreceptionid) {
-		logger.info("testreceptionid");
+	@GetMapping("/testlistbyreceptionid")
+	public List<Test> getTestReceptionListByReceptionId(@RequestParam int testreceptionid) {
+		System.out.println(testreceptionid);
 		List<Test> testreceptionlistbyid = testsService.selectbyTestReceptionid(testreceptionid);
-		
+		System.out.println(testreceptionlistbyid);
 		return testreceptionlistbyid;
 	}
 	
