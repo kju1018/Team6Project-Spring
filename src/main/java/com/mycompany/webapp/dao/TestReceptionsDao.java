@@ -12,6 +12,7 @@ public interface TestReceptionsDao {
 	public int testReceptionInsert(TestReception testreception);
 
 	public List<TestReception> selectbyTestdate(@Param("startdate") String startdate, @Param("enddate") String enddate);
-	public List<TestReception> selectbyTestpatient(int patientid);
+	public List<TestReception> selectbyPatientid(@Param("patientid") int patientid);
+
 	
 }

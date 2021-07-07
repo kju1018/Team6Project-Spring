@@ -14,21 +14,9 @@
 		insert into tests 
 		(testdataid, treatmentid, patientid, userid, reservationid, testreceptionid, result, status)
 		values
-		(#{testdataid},#{treatmentid},#{patientid},#{userid},#{reservationid}, null, #{result},#{status})
+		<foreach collection="list" item="test" separator="" >
+		(#{test.testdataid},#{test.treatmentid},#{test.patientid},#{test.userid},#{test.reservationid}, null, #{test.result},#{test.status})
+		</foreach>
 	</insert>
-	
-	<!-- <select id="selectAll" resultType="test">
-		select t.testdataid, patientid, userid, reservationid, testreceptionid, result, status,
-				testdataid, testdataname, testcontainer, testtype, groupcode, groupname, testunit, min, max
-		from tests t, testdatas td 
-		where t.testdataid = td.testdataid
-	</select>
 
-	<select id="selectbyTestpatient" resultType="test">
-  		select t.testdataid, patientid, userid, reservationid, testreceptionid, result, status,
-				testdataid, testdataname, testcontainer, testtype, groupcode, groupname, testunit, min, max
-		from tests t, testdatas td 
-		where t.testdataid = td.testdataid
-  	</select> -->
-	
 </mapper>
