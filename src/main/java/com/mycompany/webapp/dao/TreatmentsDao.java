@@ -10,7 +10,7 @@ import com.mycompany.webapp.dto.Treatment;
 public interface TreatmentsDao {
 	
 	public List<Treatment> selectByPatientId(String patientid);
-	public Treatment insert(Treatment treatment);
+	public int insert(Treatment treatment);
 	public int delete(int treatmentid);
 	public int update(Treatment treatment);
 }

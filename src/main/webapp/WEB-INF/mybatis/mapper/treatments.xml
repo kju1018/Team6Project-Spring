@@ -23,7 +23,7 @@
 	</delete>
 	
 	<update id="update" parameterType="treatment">
-		update treatments set status = #{status} where treatmentid = ${treatmentid}
+		update treatments set status = #{status}, memo = #{memo} where treatmentid = ${treatmentid}
 	</update>
 
 </mapper>
