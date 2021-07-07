@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 import com.mycompany.webapp.dto.Reservation;
 import com.mycompany.webapp.dto.TestData;
+import com.mycompany.webapp.dto.Treatment;
 
 
 	@Mapper
@@ -13,7 +14,7 @@ import com.mycompany.webapp.dto.TestData;
 		public List<String> selectAllPrescriptionTestByTreatmentid(int treatmentid);
 		public List<String> selectAllPrescriptionTestByPatientid(int patientid);
 		public TestData selectTestDataByTestDataid(String testdataid);
-		
+		public List<Treatment> selectAllTreatment();
 	}
 
 

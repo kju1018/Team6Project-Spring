@@ -23,4 +23,14 @@
 	where testdataid=#{testdataid} 
 </select>
 
+<!-- 오늘날짜의 진료데이터 불러오기 -->
+<select id="selectAllTreatment"  resultType="treatment">
+	select * 
+	from treatments 
+	where DATE_FORMAT(now(),'%Y-%m-%d') = DATE_FORMAT(treatmentdate,'%Y-%m-%d')
+	order by treatmentdate asc
+</select>
+
+
+
 </mapper>

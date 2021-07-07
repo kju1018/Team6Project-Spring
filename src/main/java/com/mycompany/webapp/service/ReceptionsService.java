@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.mycompany.webapp.dao.ReceptionsDao;
 import com.mycompany.webapp.dto.TestData;
+import com.mycompany.webapp.dto.Treatment;
 
 
 @Service
@@ -35,6 +36,12 @@ public class ReceptionsService {
 		Map<String,TestData> map = new HashMap<String,TestData>();
 		TestData testdata = receptionsDao.selectTestDataByTestDataid(testdataid);
 		return testdata;
+	}
+	
+	//오늘날짜의 검사데이터가져오기
+	public List<Treatment> GetTreatmentData() {
+		List<Treatment> list= receptionsDao.selectAllTreatment();
+		return list;
 	}
 
 }

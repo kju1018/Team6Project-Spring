@@ -3,6 +3,8 @@ package com.mycompany.webapp.controller;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -26,11 +28,13 @@ import com.mycompany.webapp.dto.Patient;
 import com.mycompany.webapp.dto.Reservation;
 import com.mycompany.webapp.dto.Test;
 import com.mycompany.webapp.dto.TestData;
+import com.mycompany.webapp.dto.Treatment;
 import com.mycompany.webapp.service.DiagnosesService;
 import com.mycompany.webapp.service.DrugsService;
 import com.mycompany.webapp.service.PatientsService;
 import com.mycompany.webapp.service.ReceptionsService;
 import com.mycompany.webapp.service.ReservationsService;
+import com.mycompany.webapp.service.TreatmentsService;
 
 @RestController
 @RequestMapping("/reception")
@@ -47,7 +51,8 @@ public class ReceptionController {
 	DiagnosesService diagnosesService;
 	@Autowired
 	ReceptionsService receptionsService;
-	
+	@Autowired
+	TreatmentsService treatmentsService;
 	//전체 예약정보 가져오기
 	@GetMapping("/reservationlist")
 	public List<Reservation> ReservationList() {
@@ -64,6 +69,7 @@ public class ReceptionController {
 		List<Test> testlist = null;
 		try {
 			newreservation = mapper.readValue(mapper.writeValueAsString(obj.get(0)), Reservation.class);
+			reservationservice.RegisterReservation(newreservation);
 		} catch (JsonMappingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -71,18 +77,6 @@ public class ReceptionController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		//진료 예약일때
-		if(obj.get(1)==null) {
-			Date date = newreservation.getReservationdate();
-			newreservation.setReservationdate(date);
-			reservationservice.RegisterReservation(newreservation);
-		}
-		// 검사예약일때
-		else {
-			//예약된 검사데이터리스트
-			List<Test> newtestlist;	
-		}
-		
 		return newreservation;
 	}
 	//예약정보 삭제하기
@@ -129,8 +123,6 @@ public class ReceptionController {
 			TestData testdata = receptionsService.GetTestData(PrescriptionTestDataIdList.get(i));
 			PrescriptionTestDataList.add(testdata);
 		}
-		
-		
 		List<Object> list = new ArrayList<Object>();
 		list.add(diagnosesList);
 		list.add(drugList);
@@ -138,6 +130,51 @@ public class ReceptionController {
 		Map<String,Object> map = new HashMap<String,Object>();
 		map.put("treatmentdetail", list);
 		return map;
+	}
+	
+	//해당 환자가 처방받았지만 아직 접수되지 않은 검사데이터 불러오기
+	@GetMapping("/prescriptiontest")
+	public Map<String,Object> PrescriptionTest(int patientid) {
+	
+		List<String> PrescriptionTestDataIdList = receptionsService.GetPrescriptionTestDataByPatientid(patientid);
+		List<TestData> PrescriptionTestDataList = new ArrayList<TestData>();
+		Map<String,Object> map = new HashMap<String,Object>();
+		
+		// 처방된 테스트가 없을때 예외처리
+		if(PrescriptionTestDataIdList.size()<1) {return map;}
+		
+		
+		for(int i=0; i<PrescriptionTestDataIdList.size(); i++) {
+			TestData testdata = receptionsService.GetTestData(PrescriptionTestDataIdList.get(i));
+			PrescriptionTestDataList.add(testdata);
+		}
+		//받은 테스트 데이터들을 그룹코드로 정렬함
+		Collections.sort(PrescriptionTestDataList,(t1, t2)-> t2.getGroupcode().length() - t1.getGroupcode().length() );
+
+		String groupcode = PrescriptionTestDataList.get(0).getGroupcode();
+		for(TestData t : PrescriptionTestDataList){
+			if(!groupcode.equals(t.getGroupcode())) {
+				groupcode = t.getGroupcode();
+			}
+			map.put(groupcode, t);
+			
+		}
+
+		return map;
+	}
+	
+	//진료 접수하기
+	@PostMapping("/receptiontreatment")
+	public Treatment ReceptionTreatment(@RequestBody Treatment treatment) {
+		System.out.println(treatment);
+		Treatment newtreatment =treatmentsService.create(treatment);
+		return newtreatment ;
+	}
+	//전체 진료정보 가져오기
+	@GetMapping("/treatmentlist")
+	public List<Treatment> TreatmentList() {
+		List<Treatment> list= receptionsService.GetTreatmentData();
+		return list;
 	}
 	//테스트
 	@GetMapping("/test")
