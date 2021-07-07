@@ -3,7 +3,7 @@
 <mapper namespace="com.mycompany.webapp.dao.ReservationsDao">
 
 <!-- 특정예약 불러오기 -->
-<select id="selectByRservationid" parameterType="string">
+<select id="selectByRservationid" parameterType="int">
 	select *
 	from reservations 
 	where reservationid=#{reservationid}

@@ -11,4 +11,5 @@ import com.mycompany.webapp.dto.Test;
 public interface TestsDao {
 	public int insert(Test test);
 	public List<Test> selectbyTestReceptionid(@Param("testreceptionid") int testreceptionid);
+
 }

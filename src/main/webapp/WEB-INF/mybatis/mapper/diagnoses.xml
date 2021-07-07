@@ -14,5 +14,11 @@
 		where dt.diagnosesdataid = d.diagnosesdataid and d.treatmentid = #{treatmentid}
 	</select>
 	
+	<insert id="insertList" parameterType="list">
+		insert into diagnoses(treatmentid, diagnosesdataid) values
+		<foreach collection="list" item="diagnoses" separator=",">
+		 	(#{diagnoses.treatmentid}, #{diagnoses.diagnosesdataid})
+		</foreach>
+	</insert>
 
 </mapper>

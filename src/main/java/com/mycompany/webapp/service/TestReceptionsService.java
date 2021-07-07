@@ -20,8 +20,10 @@ public class TestReceptionsService {
 	private TestReceptionsDao testreceptionsDao;
 	
 	public List<TestReception> getTestReceptionListByPatientId(int patientid) {
+
 		System.out.println(patientid);
 		List<TestReception> list = testreceptionsDao.selectbyPatientid(patientid);
+
 		return list;
 	}
 

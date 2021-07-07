@@ -19,7 +19,7 @@ public class TreatmentsService {
 	}
 	
 	public Treatment create(Treatment treatment) {
-		treatmentsDao.insert(treatment);
+		int row = treatmentsDao.insert(treatment);
 		return treatment;
 	}
 	

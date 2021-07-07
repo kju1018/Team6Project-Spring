@@ -51,6 +51,7 @@ public class TestController {
 		System.out.println(testreceptionid);
 		List<Test> testreceptionlistbyid = testsService.selectbyTestReceptionid(testreceptionid);
 		System.out.println(testreceptionlistbyid);
+
 		return testreceptionlistbyid;
 	}
 	

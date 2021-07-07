@@ -18,5 +18,5 @@
 		(#{test.testdataid},#{test.treatmentid},#{test.patientid},#{test.userid},#{test.reservationid}, null, #{test.result},#{test.status})
 		</foreach>
 	</insert>
-	
+
 </mapper>
