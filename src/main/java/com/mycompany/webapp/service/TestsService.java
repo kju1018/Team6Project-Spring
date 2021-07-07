@@ -32,4 +32,8 @@ public class TestsService {
 		}
 		return row;
 	}
+	
+	public List<Test> getTestsByTreatmentId(int treatmentid){
+		return testsDao.selectByTreatmentId(treatmentid);
+	}
 }

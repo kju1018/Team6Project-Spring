@@ -89,32 +89,47 @@ public class TreatmentsController {
 		Map<String, List> map = new HashMap<String, List>();
 		List<Drug> drugList = drugsService.getDrugsByTreatmentId(treatmentid);
 		List<Diagnoses> diagnosesList = diagnosesService.getDiagnosesByTreatmentId(treatmentid);
+		List<Test> testsList = testsService.getTestsByTreatmentId(treatmentid);
 		map.put("drugsList", drugList);
 		map.put("diagnosesList", diagnosesList);
+		map.put("testsList", testsList);
 		return map;
 	}
 	
+	
+	/*
+	 * HashMap에 prescription
+	 * 
+	 * treatmentDrugs: 처방받은 약 리스트
+	 * treatmentDiagnoses: 처방받은 증상 리스트
+	 * treatmentTests: 처방받은 검사 리스트
+	 * treatment: 해당 진료
+	 * userid: 진료를 한 의사 아이디
+	 * patientid: 진료 환자 아이디
+	 * */
 	//처방받은 내역 저장
 	@PostMapping("/prescribetreatment")
 	public String prescribereatment(@RequestBody HashMap prescription) {
+		//map안에 있는 값들 가져오기
 		ObjectMapper mapper = new ObjectMapper();
 		List<Drug> drugList = mapper.convertValue(prescription.get("treatmentDrugs"), new TypeReference<List<Drug>>() { });
 		List<Diagnoses> diagnosesList = mapper.convertValue(prescription.get("treatmentDiagnoses"), new TypeReference<List<Diagnoses>>() { });
 		List<Test> testList = mapper.convertValue(prescription.get("treatmentTests"), new TypeReference<List<Test>>() { });
-		
 		Treatment nowTreatment = mapper.convertValue(prescription.get("treatment"), Treatment.class);
-		
 		String userid = (String) prescription.get("userid");
 		int patientid = (int) prescription.get("patientid");
+		
+		//test테이블에 넣을 데이터 처리
 		Map<String, Object> testData = new HashMap<String, Object>();
 		testData.put("testList", testList);
 		testData.put("userid", userid);
 		testData.put("patientid", patientid);
-
-		drugsService.insertDrugList(drugList);
-		diagnosesService.insertDiagnosesList(diagnosesList);
+		testData.put("treatmentid", nowTreatment.getTreatmentid());
 		testsService.insertTestList(testData);
 		
+		drugsService.insertDrugList(drugList);
+		diagnosesService.insertDiagnosesList(diagnosesList);
+
 		nowTreatment.setStatus("진료 완료");
 		treatmentsService.updateStatus(nowTreatment);
 		return "success";

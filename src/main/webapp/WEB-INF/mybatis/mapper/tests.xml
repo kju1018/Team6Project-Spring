@@ -10,13 +10,20 @@
 		where t.testreceptionid = #{testreceptionid} AND t.testdataid = td.testdataid
   	</select>
 	
-	<insert id="testInsert" parameterType="test">
+	<insert id="insertList" parameterType="map">
 		insert into tests 
 		(testdataid, treatmentid, patientid, userid, reservationid, testreceptionid, result, status)
 		values
-		<foreach collection="list" item="test" separator="" >
-		(#{test.testdataid},#{test.treatmentid},#{test.patientid},#{test.userid},#{test.reservationid}, null, #{test.result},#{test.status})
+		<foreach collection="testList" item="test" separator=",">
+		(#{test.testdataid},#{treatmentid}, #{patientid}, #{userid}, null, null, null, "대기중" )
 		</foreach>
 	</insert>
+	
+	<select id="selectByTreatmentId" resultType="test">
+		select t.testdataid, testdataname, testcontainer, testtype, groupcode, groupname, testunit, min, max, status,
+				result, testreceptionid, reservationid, treatmentid, userid, patientid
+		from testsdatas td, tests t
+		where treatmentid = #{treatmentid} and td.testdataid = t.testdataid
+	</select>
 
 </mapper>

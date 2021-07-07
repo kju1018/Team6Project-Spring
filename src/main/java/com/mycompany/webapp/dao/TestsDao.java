@@ -10,7 +10,7 @@ import com.mycompany.webapp.dto.Test;
 
 @Mapper
 public interface TestsDao {
-	public int insertList(Map<String, Object> testList);
+	public int insertList(Map<String, Object> testData);
 	public List<Test> selectbyTestReceptionid(@Param("testreceptionid") int testreceptionid);
-
+	public List<Test> selectByTreatmentId(int treatmentid);
 }
