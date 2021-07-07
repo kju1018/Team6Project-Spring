@@ -92,16 +92,19 @@ public class TreatmentsController {
 		ObjectMapper mapper = new ObjectMapper();
 		List<Drug> drugList = mapper.convertValue(prescription.get("treatmentDrugs"), new TypeReference<List<Drug>>() { });
 		List<Diagnoses> diagnosesList = mapper.convertValue(prescription.get("treatmentDiagnoses"), new TypeReference<List<Diagnoses>>() { });
-//		List<Test> testList = mapper.convertValue(prescription.get("treatmentTests"), new TypeReference<List<Test>>() { });
+		List<Test> testList = mapper.convertValue(prescription.get("treatmentTests"), new TypeReference<List<Test>>() { });
 		Treatment nowTreatment = mapper.convertValue(prescription.get("treatment"), Treatment.class);
 		
+		logger.info(drugList.toString());
+		logger.info(diagnosesList.toString());
+		logger.info(testList.toString());
 		logger.info(nowTreatment.toString());
-//		drugsService.insertDrugList(drugList);
-//		diagnosesService.insertDiagnosesList(diagnosesList);
+		drugsService.insertDrugList(drugList);
+		diagnosesService.insertDiagnosesList(diagnosesList);
 //		testsService.insertTestList(testList);
 		 
-		/*		nowTreatment.setStatus("진료 완료");
-				treatmentsService.updateStatus(nowTreatment);*/
+		nowTreatment.setStatus("진료 완료");
+		treatmentsService.updateStatus(nowTreatment);
 		return "success";
 	}
 	
@@ -120,9 +123,8 @@ public class TreatmentsController {
 	
 	@GetMapping("/statictests")
 	public List<TestData> getStaticTestList() {
-//		List<TestData> staticTests = testDatasService.getTestDataList();
-//		logger.info(staticTests.toString());
-		return null;
+		List<TestData> staticTests = testDatasService.getTestDataList();
+		return staticTests;
 	}
 	//------------------------------------
 	
