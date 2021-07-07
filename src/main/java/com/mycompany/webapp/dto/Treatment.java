@@ -8,7 +8,7 @@ public class Treatment {
 
 	private int treatmentid;
 	private String memo;
-	@JsonFormat(pattern="yyyy-MM-dd")
+	@JsonFormat(pattern="yyyy-MM-dd HH:mm", timezone = "Asia/Seoul")
 	private Date treatmentdate;
 	private int patientid;
 	private String userid;
