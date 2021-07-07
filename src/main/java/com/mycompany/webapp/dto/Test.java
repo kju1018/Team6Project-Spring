@@ -114,4 +114,14 @@ public class Test {
 	public void setUserid(String userid) {
 		this.userid = userid;
 	}
+	@Override
+	public String toString() {
+		return "Test [status=" + status + ", result=" + result + ", testreceptionid=" + testreceptionid
+				+ ", testdataid=" + testdataid + ", reservationid=" + reservationid + ", treatmentid=" + treatmentid
+				+ ", patientid=" + patientid + ", userid=" + userid + ", testdataname=" + testdataname
+				+ ", testcontainer=" + testcontainer + ", groupcode=" + groupcode + ", testtype=" + testtype
+				+ ", groupname=" + groupname + ", testunit=" + testunit + ", min=" + min + ", max=" + max + "]";
+	}
+	
+	
 }
