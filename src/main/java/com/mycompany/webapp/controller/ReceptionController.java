@@ -180,6 +180,7 @@ public class ReceptionController {
 	@GetMapping("/treatmentlist")
 	public List<Treatment> TreatmentList() {
 		List<Treatment> list= receptionsService.GetTreatmentData();
+		
 		return list;
 	}
 	//전체 접수된 검사데이터 가져오기
@@ -210,7 +211,17 @@ public class ReceptionController {
 		return testreception;
 	}
 	
-	
+	//검사접수 삭제하기
+	@DeleteMapping("/removetestreception")
+	public int RemoveTestReception(@RequestBody Map<String,Integer> obj) {
+		//해당 testreception 삭제하면 자동으로 test에 있는 testreceptionid값 setnull됨.
+		return receptionsService.RemoveTestReception(obj.get("testreceptionid"));
+	}
+	//진료접수 삭제하기
+	@DeleteMapping("/removereceptiontreatment")
+	public  int RemoveReceptionTreatment(@RequestBody Map<String,Integer> obj) {
+		return treatmentsService.deleteTreatment(obj.get("treatmentid"));
+	}
 	//테스트
 	@GetMapping("/test")
 	public List<Object> test(int treatmentid, int patientid) {

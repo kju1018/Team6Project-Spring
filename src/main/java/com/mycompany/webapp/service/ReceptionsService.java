@@ -51,6 +51,10 @@ public class ReceptionsService {
 		int row = receptionsDao.inserTtestReception(testreception);
 		return row;
 	}
+	//검사접수 데이터 삭제
+		public int RemoveTestReception(int testreceptionid) {
+			return receptionsDao.deleteByTestreceptionid(testreceptionid); 
+		}
 	//테스트 접수됬을때 테스트 데이터 업데이트
 	public int UpdateTestList(ReceptedTestDataParameter receptedparameter) {
 		int row = receptionsDao.updateTestListByparametermap(receptedparameter);
@@ -61,5 +65,6 @@ public class ReceptionsService {
 		
 		return receptionsDao.selectAllTestReception();
 	}
+	
 
 }

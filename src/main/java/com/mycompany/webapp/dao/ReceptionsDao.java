@@ -21,6 +21,7 @@ import com.mycompany.webapp.dto.Treatment;
 		public int inserTtestReception(TestReception testreception);
 		public int updateTestListByparametermap(ReceptedTestDataParameter receptedparameter);
 		public List<TestReception> selectAllTestReception();
+		public int deleteByTestreceptionid(int testreceptionid);
 	}
 
 
