@@ -9,7 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.mycompany.webapp.dao.ReceptionsDao;
+import com.mycompany.webapp.dto.ReceptedTestDataParameter;
 import com.mycompany.webapp.dto.TestData;
+import com.mycompany.webapp.dto.TestReception;
 import com.mycompany.webapp.dto.Treatment;
 
 
@@ -42,6 +44,22 @@ public class ReceptionsService {
 	public List<Treatment> GetTreatmentData() {
 		List<Treatment> list= receptionsDao.selectAllTreatment();
 		return list;
+	}
+	
+	//검사접수데이터 인서트
+	public int inserTtestReception(TestReception testreception) {
+		int row = receptionsDao.inserTtestReception(testreception);
+		return row;
+	}
+	//테스트 접수됬을때 테스트 데이터 업데이트
+	public int UpdateTestList(ReceptedTestDataParameter receptedparameter) {
+		int row = receptionsDao.updateTestListByparametermap(receptedparameter);
+		return row;
+	}
+	//전체 접수된 검사데이터 가져오기
+	public List<TestReception> GetTestReceptionData() {
+		
+		return receptionsDao.selectAllTestReception();
 	}
 
 }

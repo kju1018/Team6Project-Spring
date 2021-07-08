@@ -10,6 +10,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,15 +20,18 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mycompany.webapp.dto.Diagnoses;
 import com.mycompany.webapp.dto.Drug;
 import com.mycompany.webapp.dto.Patient;
+import com.mycompany.webapp.dto.ReceptedTestDataParameter;
 import com.mycompany.webapp.dto.Reservation;
 import com.mycompany.webapp.dto.Test;
 import com.mycompany.webapp.dto.TestData;
+import com.mycompany.webapp.dto.TestReception;
 import com.mycompany.webapp.dto.Treatment;
 import com.mycompany.webapp.service.DiagnosesService;
 import com.mycompany.webapp.service.DrugsService;
@@ -150,15 +154,17 @@ public class ReceptionController {
 		}
 		//받은 테스트 데이터들을 그룹코드로 정렬함
 		Collections.sort(PrescriptionTestDataList,(t1, t2)-> t2.getGroupcode().length() - t1.getGroupcode().length() );
-
+		List<TestData> list = new ArrayList<TestData>();
 		String groupcode = PrescriptionTestDataList.get(0).getGroupcode();
 		for(TestData t : PrescriptionTestDataList){
 			if(!groupcode.equals(t.getGroupcode())) {
+				map.put(groupcode, list);
 				groupcode = t.getGroupcode();
+				list = new ArrayList<TestData>();
 			}
-			map.put(groupcode, t);
-			
+			list.add(t);
 		}
+		map.put(groupcode, list);
 
 		return map;
 	}
@@ -176,6 +182,35 @@ public class ReceptionController {
 		List<Treatment> list= receptionsService.GetTreatmentData();
 		return list;
 	}
+	//전체 접수된 검사데이터 가져오기
+	@GetMapping("/testreceptionlist")
+	public List<TestReception> TestReceptionList() {
+		List<TestReception> list= receptionsService.GetTestReceptionData();
+		return list;
+	}
+	//검사 접수하기
+	@PostMapping("/receptiontest")
+	public TestReception ReceptionTest(@RequestBody Map<String,Object>json) {
+		int patientid = Integer.parseInt(json.get("patientid").toString());
+		System.out.println(patientid);
+		//TestReception만들기
+		TestReception testreception = new TestReception();
+		testreception.setTestdate(new Date());
+		testreception.setPatientid(patientid);
+		testreception.setStatus("대기중");
+		receptionsService.inserTtestReception(testreception);
+		//선택된 검사들의 testreceptionid 칼럼에 만든 testreception의 id값 넣어주기
+		int testreceptionid = testreception.getTestreceptionid();
+		List<String> arr = (ArrayList<String>)json.get("testdataidlist");
+		ReceptedTestDataParameter receptedparameter = new ReceptedTestDataParameter();
+		receptedparameter.setTestreceptionid(testreceptionid);
+		receptedparameter.setTestdataidlist(arr);
+		receptionsService.UpdateTestList(receptedparameter);
+
+		return testreception;
+	}
+	
+	
 	//테스트
 	@GetMapping("/test")
 	public List<Object> test(int treatmentid, int patientid) {
