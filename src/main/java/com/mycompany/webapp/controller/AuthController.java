@@ -8,6 +8,8 @@ import java.util.Map;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -33,6 +35,7 @@ public class AuthController {
 	@Resource(name="daoAuthenticationManager")
 	private AuthenticationManager authenticationManager;
 	
+	private static final Logger logger = LoggerFactory.getLogger(AuthController.class);
 	
 	@PostMapping("/login")
 	public Map<String, String> userlogin(@RequestBody Map<String, String> user) {
@@ -64,6 +67,12 @@ public class AuthController {
 	
 		return "success";
 	}	
-
+	
+	@PostMapping("/join")
+	public String join(@RequestBody User user) {
+		logger.info(user.toString());
+		return null;
+		
+	}
 
 }
