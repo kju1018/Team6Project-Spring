@@ -8,7 +8,9 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+
 import com.mycompany.webapp.dao.UsersDao;
 import com.mycompany.webapp.dto.User;
 
@@ -19,7 +21,15 @@ public class UsersService {
 	private UsersDao usersDao;
 
 	public void join(User user) {
+		
+		BCryptPasswordEncoder bpe = new BCryptPasswordEncoder();
+		user.setUserpassword(bpe.encode(user.getUserpassword()));
+		
+		user.setUserenabled(1);
+		user.setCodenumber(1);
+		
 		usersDao.insert(user);
+
 	}
 
 }
