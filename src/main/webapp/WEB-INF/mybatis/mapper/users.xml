@@ -2,24 +2,36 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.mycompany.webapp.dao.UsersDao">
 
-<!-- 전체 임직원 데이터 불러오기 -  의사 / 간호사 / 전체 -->
-<select id="selectAll" parameterType="String" resultType="user">
-	select *
-	from users
-
-			<if test="usertype!=null and '의사'.equals(usertype)">
-
-				where role_authority = "ROLE_DOCTOR"
-
-			</if>
-
-			<if test="usertype!=null and '간호사'.equals(usertype)">
-
-				where role_authority = "ROLE_NURSE"
-
-			</if>					
-
+	<insert id="insert"  parameterType="user">
+		insert into users
+		(userid, username, userroom, role_authority, userpassword, phonenumber, userenabled, sex, codenumber)	
+		values
+		(#{userid}, #{username}, #{userroom}, #{role_authority}, #{userpassword}, #{phonenumber},
+			 #{userenabled}, #{sex}, #{codenumber})
 		
-</select> 
+	</insert>
+	
+	<select id="selectByUserid" parameterType="string" resultType="user">
+		select * from users where userid = #{userid}
+	</select>
 
+	<!-- 전체 임직원 데이터 불러오기 -  의사 / 간호사 / 전체 -->
+	<select id="selectAll" parameterType="String" resultType="user">
+		select *
+		from users
+	
+				<if test="usertype!=null and '의사'.equals(usertype)">
+	
+					where role_authority = "ROLE_DOCTOR"
+	
+				</if>
+	
+				<if test="usertype!=null and '간호사'.equals(usertype)">
+	
+					where role_authority = "ROLE_NURSE"
+	
+				</if>					
+	
+			
+	</select> 
 </mapper>

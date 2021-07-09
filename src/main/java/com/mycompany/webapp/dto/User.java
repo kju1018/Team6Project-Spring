@@ -3,13 +3,13 @@ package com.mycompany.webapp.dto;
 public class User {
 	private String userid;
 	private String username;
+	private String userpassword;
 	private String userroom;
 	private String role_authority;
-	private String userpassword;
-	private String phonenumber;
 	private int userenabled;
+	private String phonenumber;
+	private String sex;
 	private int codenumber;
-	
 	
 	public String getUserid() {
 		return userid;
@@ -23,6 +23,12 @@ public class User {
 	public void setUsername(String username) {
 		this.username = username;
 	}
+	public String getUserpassword() {
+		return userpassword;
+	}
+	public void setUserpassword(String userpassword) {
+		this.userpassword = userpassword;
+	}
 	public String getUserroom() {
 		return userroom;
 	}
@@ -35,11 +41,11 @@ public class User {
 	public void setRole_authority(String role_authority) {
 		this.role_authority = role_authority;
 	}
-	public String getUserpassword() {
-		return userpassword;
+	public int getUserenabled() {
+		return userenabled;
 	}
-	public void setUserpassword(String userpassword) {
-		this.userpassword = userpassword;
+	public void setUserenabled(int userenabled) {
+		this.userenabled = userenabled;
 	}
 	public String getPhonenumber() {
 		return phonenumber;
@@ -47,11 +53,11 @@ public class User {
 	public void setPhonenumber(String phonenumber) {
 		this.phonenumber = phonenumber;
 	}
-	public int getUserenabled() {
-		return userenabled;
+	public String getSex() {
+		return sex;
 	}
-	public void setUserenabled(int userenabled) {
-		this.userenabled = userenabled;
+	public void setSex(String sex) {
+		this.sex = sex;
 	}
 	public int getCodenumber() {
 		return codenumber;
@@ -61,8 +67,8 @@ public class User {
 	}
 	@Override
 	public String toString() {
-		return "User [userid=" + userid + ", username=" + username + ", userroom=" + userroom + ", role_authority="
-				+ role_authority + ", userpassword=" + userpassword + ", phonenumber=" + phonenumber + ", userenabled="
-				+ userenabled + ", codenumber=" + codenumber + "]";
+		return "User [userid=" + userid + ", username=" + username + ", userpassword=" + userpassword + ", userroom="
+				+ userroom + ", role_authority=" + role_authority + ", userenabled=" + userenabled + ", phonenumber="
+				+ phonenumber + ", sex=" + sex + ", codenumber=" + codenumber + "]";
 	}
 }

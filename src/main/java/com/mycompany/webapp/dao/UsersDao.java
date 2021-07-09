@@ -8,5 +8,9 @@ import com.mycompany.webapp.dto.User;
 
 @Mapper
 public interface UsersDao {
+
+	public int insert(User user);
+	public User selectByUserid(String userid);
+	public User selectAll();
 	public List<User> selectAll(String usertype);
 }
