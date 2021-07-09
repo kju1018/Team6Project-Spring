@@ -74,6 +74,7 @@ public class RedisWebSocket extends TextWebSocketHandler
 	//Redis 메시지 구독(Subscribe) 메소드
 	@Override
 	public void onMessage(Message message, byte[] pattern) {
+		logger.info(message.toString());
 		String topic = new String(message.getChannel());
 		String content = new String(message.getBody());
 		logger.info("onMessage: " + topic + " - " + content);

@@ -1,5 +1,6 @@
 package com.mycompany.webapp.controller;
 
+import java.io.PrintWriter;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -10,8 +11,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -44,7 +50,8 @@ import com.mycompany.webapp.service.TreatmentsService;
 @RequestMapping("/reception")
 
 public class ReceptionController {
-
+	@Autowired
+	private RedisTemplate<String, String> redisTemplate;
 	@Autowired
 	ReservationsService reservationservice;
 	@Autowired
@@ -239,6 +246,25 @@ public class ReceptionController {
 		return list;
 	}
 	
+	
+	@RequestMapping("/sendRedisMessage")
+	public void sendRedisMessage(String topic, String content, HttpServletResponse response) {
+		try {
+			System.out.println(topic + " " + content);
+			redisTemplate.convertAndSend(topic, content);
+			response.setContentType("application/json; charset=UTF-8");
+			PrintWriter pw = response.getWriter();
+			
+			JSONObject jsonObject = new JSONObject();
+			jsonObject.put("result", "success");
+			pw.println(jsonObject.toString());
+			pw.flush();
+			pw.close();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
 	
 	
 }
