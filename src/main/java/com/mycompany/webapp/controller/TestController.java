@@ -68,9 +68,11 @@ public class TestController {
 			for(int j=0; j<tests.size(); j++) {
 				tests.get(j);
 				System.out.println(tests.get(j));
+				test.add(tests.get(j));
 			}
 		}
 		
+		System.out.println(test);
 		//List<Object> list = checkedList.get(0);
 		
 		//List<Test> starttest = testsService.starttest(list);
