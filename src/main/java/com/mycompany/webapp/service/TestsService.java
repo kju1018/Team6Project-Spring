@@ -1,5 +1,6 @@
 package com.mycompany.webapp.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -20,12 +21,12 @@ public class TestsService {
 	@Autowired
 	private TestsDao testsDao;
 	
-	public List<Test> selectbyTestReceptionid(int testreceptionid) { //접수에서 환자 검사 접수 시 필요
+	public List<Test> selectbyTestReceptionid(int testreceptionid) { //�젒�닔�뿉�꽌 �솚�옄 寃��궗 �젒�닔 �떆 �븘�슂
 		List<Test> list = testsDao.selectbyTestReceptionid(testreceptionid);
 		return list;
 	}
 	
-	public int insertTestList(Map<String, Object> testData) { //진료 페이지에서 검사 추가
+	public int insertTestList(Map<String, Object> testData) { //吏꾨즺 �럹�씠吏��뿉�꽌 寃��궗 異붽�
 		int row = 0;
 		if(((List<Test>) testData.get("testList")).size() > 0 ) {
 			row = testsDao.insertList(testData);
@@ -37,7 +38,10 @@ public class TestsService {
 		return testsDao.selectByTreatmentId(treatmentid);
 	}
 	
-	public List<Test> starttest(List<Object> list) {
-		return testsDao.starttest(list);
+	public int starttest(List<Test> test) {
+
+			testsDao.changeWaitingStatus(test);
+
+		return testsDao.changeWaitingStatus(test);
 	}
 }
