@@ -102,6 +102,12 @@ public class ReceptionController {
 		List<Patient> list= patientservice.getPatientList();	
 		return list;
 	}
+	//특정 환자 가져오기
+	@GetMapping("/getpatient")
+	public Patient getPatient(int patientid) {
+		return	patientservice.getPatient(patientid);	
+		 
+	}
 	//환자등록하기
 	@PostMapping("/registerpatient")
 	public int RegisterPatient(@RequestBody Patient patient) {
