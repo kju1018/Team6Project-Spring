@@ -4,7 +4,7 @@
 
 	<!-- testreceptionid로 testdate와 testdataid 불러옴 -->
   	<select id="selectbyTestReceptionid" resultType="test">
-  		select t.testdataid, patientid, userid, reservationid, testreceptionid, result, status,
+  		select t.testdataid, patientid, userid, testreceptionid, result, status,
 				testdataname, testcontainer, testtype, groupcode, groupname, testunit, min, max
 		from tests t, testsdatas td 
 		where t.testreceptionid = #{testreceptionid} AND t.testdataid = td.testdataid
@@ -12,7 +12,7 @@
 	
 	<insert id="insertList" parameterType="map">
 		insert into tests 
-		(testdataid, treatmentid, patientid, userid, reservationid, testreceptionid, result, status)
+		(testdataid, treatmentid, patientid, userid, testreceptionid, result, status)
 		values
 		<foreach collection="testList" item="test" separator=",">
 		(#{test.testdataid},#{treatmentid}, #{patientid}, #{userid}, null, null, null, "대기중" )
@@ -21,9 +21,17 @@
 	
 	<select id="selectByTreatmentId" resultType="test">
 		select t.testdataid, testdataname, testcontainer, testtype, groupcode, groupname, testunit, min, max, status,
-				result, testreceptionid, reservationid, treatmentid, userid, patientid
+				result, testreceptionid, treatmentid, userid, patientid
 		from testsdatas td, tests t
 		where treatmentid = #{treatmentid} and td.testdataid = t.testdataid
 	</select>
+	
+	<update id="changeWaitingStatus" parameterType="list">
+		<foreach item="list" index="index" collection="listMap">
+			update tests
+			set status = "진행중"
+			where testreceptionid = #{testreceptionid}
+		</foreach>
+	</update>
 
 </mapper>

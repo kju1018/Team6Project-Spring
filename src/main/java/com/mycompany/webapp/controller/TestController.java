@@ -1,12 +1,17 @@
 package com.mycompany.webapp.controller;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -48,11 +53,33 @@ public class TestController {
 	
 	@GetMapping("/testlistbyreceptionid")
 	public List<Test> getTestReceptionListByReceptionId(@RequestParam int testreceptionid) {
-		System.out.println(testreceptionid);
 		List<Test> testreceptionlistbyid = testsService.selectbyTestReceptionid(testreceptionid);
-		System.out.println(testreceptionlistbyid);
 
 		return testreceptionlistbyid;
+	}   
+	
+	@PutMapping("/starttest")
+	public ArrayList<Test> StartTest(@RequestBody ArrayList<List<Test>> checkedList) {
+		System.out.println("DDDD"+checkedList.size());
+		
+		List test = new ArrayList();
+		for(int i=0; i<checkedList.size(); i++) {
+			List<Test> tests = checkedList.get(i);
+			for(int j=0; j<tests.size(); j++) {
+				tests.get(j);
+				System.out.println(tests.get(j));
+			}
+		}
+		
+		//List<Object> list = checkedList.get(0);
+		
+		//List<Test> starttest = testsService.starttest(list);
+		return null;
+	}
+	
+	@PostMapping("/upload")
+	public void insertImg() {
+	
 	}
 	
 	

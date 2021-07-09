@@ -36,4 +36,8 @@ public class TestsService {
 	public List<Test> getTestsByTreatmentId(int treatmentid){
 		return testsDao.selectByTreatmentId(treatmentid);
 	}
+	
+	public List<Test> starttest(List<Object> list) {
+		return testsDao.starttest(list);
+	}
 }
