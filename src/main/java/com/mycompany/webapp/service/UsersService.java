@@ -1,6 +1,8 @@
 package com.mycompany.webapp.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -20,16 +22,23 @@ public class UsersService {
 	@Autowired
 	private UsersDao usersDao;
 
-	public void join(User user) {
+	public Map<String, String> join(User user) {
 		
-		BCryptPasswordEncoder bpe = new BCryptPasswordEncoder();
-		user.setUserpassword(bpe.encode(user.getUserpassword()));
-		
-		user.setUserenabled(1);
-		user.setCodenumber(1);
-		
-		usersDao.insert(user);
+		Map<String, String> map = new HashMap<String, String>();
+		User existUser = usersDao.selectByUserid(user.getUserid());
+		if(existUser == null) {
+			BCryptPasswordEncoder bpe = new BCryptPasswordEncoder();
+			user.setUserpassword(bpe.encode(user.getUserpassword()));
+			user.setUserenabled(1);
+			user.setCodenumber(1);
+			
+			usersDao.insert(user);
+			map.put("state", "success");
+		} else {
+			map.put("state", "fail");
+		}
 
+		return map;
 	}
 
 }

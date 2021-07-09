@@ -10,5 +10,9 @@
 			 #{userenabled}, #{sex}, #{codenumber})
 		
 	</insert>
+	
+	<select id="selectByUserid" parameterType="string" resultType="user">
+		select * from users where userid = #{userid}
+	</select>
 
 </mapper>
