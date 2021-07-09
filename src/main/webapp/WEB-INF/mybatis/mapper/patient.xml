@@ -3,7 +3,7 @@
 <mapper namespace="com.mycompany.webapp.dao.PatientsDao">
 
 <!-- 특정환자 불러오기 -->
-<select id="selectByPatientid" parameterType="string">
+<select id="selectByPatientid" parameterType="int">
 	select *
 	from patients 
 	where patientid=#{patientid}

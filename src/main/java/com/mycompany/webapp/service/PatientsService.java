@@ -29,7 +29,7 @@ public class PatientsService {
 		return patientsDao.selectAll();
 	}
 	//특정환자 가져오기
-	public Patient getPatient(String patientid) {
+	public Patient getPatient(int patientid) {
 		return patientsDao.selectByPatient(patientid);
 	}
 }
