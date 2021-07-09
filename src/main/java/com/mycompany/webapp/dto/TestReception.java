@@ -6,7 +6,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 public class TestReception {
 	private int testreceptionid;
-	@JsonFormat(pattern="yyyy-MM-dd")
+	@JsonFormat(pattern="yyyy-MM-dd HH:mm", timezone = "Asia/Seoul")
 	private Date testdate;
 	private String status;
 	private int patientid;

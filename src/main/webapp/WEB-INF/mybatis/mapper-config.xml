@@ -14,6 +14,8 @@
      <typeAlias type="com.mycompany.webapp.dto.Test" alias="test"/>
    	<typeAlias type="com.mycompany.webapp.dto.TestReception" alias="testreception"/>
    	<typeAlias type="com.mycompany.webapp.dto.TestData" alias="testdata"/>
+   	<typeAlias type="com.mycompany.webapp.dto.TestImg" alias="testimg"/>
    	<typeAlias type="com.mycompany.webapp.dto.ReceptedTestDataParameter" alias="receptedtestdataparameter"/>
+
    </typeAliases>
 </configuration>
