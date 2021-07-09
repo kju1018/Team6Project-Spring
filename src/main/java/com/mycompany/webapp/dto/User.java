@@ -10,6 +10,7 @@ public class User {
 	private String phonenumber;
 	private String sex;
 	private int codenumber;
+	
 	public String getUserid() {
 		return userid;
 	}
@@ -70,7 +71,4 @@ public class User {
 				+ userroom + ", role_authority=" + role_authority + ", userenabled=" + userenabled + ", phonenumber="
 				+ phonenumber + ", sex=" + sex + ", codenumber=" + codenumber + "]";
 	}
-	
-	
-	
 }

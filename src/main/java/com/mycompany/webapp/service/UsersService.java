@@ -3,7 +3,7 @@ package com.mycompany.webapp.service;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -14,6 +14,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.mycompany.webapp.dao.UsersDao;
+import com.mycompany.webapp.dto.Treatment;
 import com.mycompany.webapp.dto.User;
 
 @Service
@@ -40,5 +41,9 @@ public class UsersService {
 
 		return map;
 	}
+	public List<User> getUserList(String usertype) {
+		return usersDao.selectAll(usertype);
+	}
+
 
 }
