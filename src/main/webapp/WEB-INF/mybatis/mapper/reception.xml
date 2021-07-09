@@ -23,4 +23,41 @@
 	where testdataid=#{testdataid} 
 </select>
 
+<!-- 오늘날짜의 진료데이터 불러오기 -->
+<select id="selectAllTreatment"  resultType="treatment">
+	select * 
+	from treatments 
+	where DATE_FORMAT(CONVERT_TZ(NOW(),'+00:00','+09:00'),'%Y-%m-%d') = DATE_FORMAT(CONVERT_TZ(treatmentdate,'+00:00','+09:00'),'%Y-%m-%d')
+	order by treatmentdate asc
+</select>
+ <!-- 오늘날짜의 접수된 검사데이터 불러오기 -->
+<select id="selectAllTestReception" resultType="testreception">
+	select * from testreceptions
+	where DATE_FORMAT(CONVERT_TZ(NOW(),'+00:00','+09:00'),'%Y-%m-%d') = DATE_FORMAT(CONVERT_TZ(testdate,'+00:00','+09:00'),'%Y-%m-%d')
+	order by testdate asc
+</select>
+<!-- 검사접수 데이터 삽입 -->
+<insert id="inserTtestReception" parameterType="testreception" useGeneratedKeys="true" keyProperty="testreceptionid">
+	insert into testreceptions
+   	(testreceptionid, testdate, status, patientid)
+   	values
+   	(#{testreceptionid},#{testdate},#{status},#{patientid})
+</insert>
+<delete id="deleteByTestreceptionid" parameterType="int">
+	delete from testreceptions
+	where testreceptionid=#{testreceptionid}
+</delete>
+<!-- 접수된 테스트데이터 수정 -->
+<update id="updateTestListByparametermap" parameterType="receptedtestdataparameter">
+	update tests set
+	testreceptionid=#{testreceptionid}
+	where 
+		<foreach collection="testdataidlist" item="testdataid" separator="or">
+			testdataid= #{testdataid}
+		</foreach>	
+</update>
+
+
+
+
 </mapper>
