@@ -73,12 +73,6 @@ public class AuthController {
 		return "success";
 	}	
 	
-	@PostMapping("/join")
-	public Map<String, String> join(@RequestBody User user) {
-		
-		usersService.join(user);
-		return null;
-		 
-	}
+
 
 }

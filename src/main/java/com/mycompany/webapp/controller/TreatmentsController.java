@@ -59,18 +59,18 @@ public class TreatmentsController {
 	@Autowired
 	private TestsService testsService;
 	
-	@PostMapping("/test")
-	public String test() {
-		Treatment treatment = new Treatment();
-		treatment.setPatientid(1);
-		treatment.setMemo("");
-		treatment.setStatus("진료 대기");
-		treatment.setTreatmentdate(new Date());
-		treatment.setUserid("user1");
-		Treatment newTreatment = treatmentsService.create(treatment);
-		System.out.println(newTreatment);
-		return "test";
-	}
+//	@PostMapping("/test")
+//	public String test() {
+//		Treatment treatment = new Treatment();
+//		treatment.setPatientid(1);
+//		treatment.setMemo("");
+//		treatment.setStatus("진료 대기");
+//		treatment.setTreatmentdate(new Date());
+//		treatment.setUserid("user1");
+//		Treatment newTreatment = treatmentsService.create(treatment);
+//		System.out.println(newTreatment);
+//		return "test";
+//	}
 	
 	@GetMapping("/treatments/{patientid}")
 	public List<Treatment> getTreatmentList(@PathVariable String patientid) {
