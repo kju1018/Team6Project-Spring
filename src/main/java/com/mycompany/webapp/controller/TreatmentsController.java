@@ -119,6 +119,7 @@ public class TreatmentsController {
 		String userid = (String) prescription.get("userid");
 		int patientid = (int) prescription.get("patientid");
 		
+		logger.info(""+nowTreatment.getTreatmentdate());
 		//test테이블에 넣을 데이터 처리
 		Map<String, Object> testData = new HashMap<String, Object>();
 		testData.put("testList", testList);

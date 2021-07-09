@@ -3,6 +3,8 @@ package com.mycompany.webapp.controller;
 import java.util.List;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,6 +21,8 @@ import com.mycompany.webapp.service.UsersService;
 @RequestMapping("/user")
 public class UserController {
 	
+	private static final Logger logger = LoggerFactory.getLogger(UserController.class);
+	
 	@Autowired
 	private UsersService usersService;
 	
@@ -32,9 +36,8 @@ public class UserController {
 	
 	@PostMapping("/join")
 	public Map<String, String> join(@RequestBody User user) {
-		
-		usersService.join(user);
-		return null;
+		logger.info(user.toString());
+		return usersService.join(user);
 		 
 	}
 }

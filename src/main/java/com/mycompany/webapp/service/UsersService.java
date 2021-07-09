@@ -36,7 +36,7 @@ public class UsersService {
 			usersDao.insert(user);
 			map.put("state", "success");
 		} else {
-			map.put("state", "fail");
+			map.put("state", "failure");
 		}
 
 		return map;
