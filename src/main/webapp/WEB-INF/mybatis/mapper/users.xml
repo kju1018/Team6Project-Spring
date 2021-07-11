@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="euc-kr" ?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.mycompany.webapp.dao.UsersDao">
 
@@ -15,18 +15,18 @@
 		select * from users where userid = #{userid}
 	</select>
 
-	<!-- ÀüÃ¼ ÀÓÁ÷¿ø µ¥ÀÌÅÍ ºÒ·¯¿À±â -  ÀÇ»ç / °£È£»ç / ÀüÃ¼ -->
+	<!-- ì „ì²´ ìž„ì§ì› ë°ì´í„° ë¶ˆëŸ¬ì˜¤ê¸° -  ì˜ì‚¬ / ê°„í˜¸ì‚¬ / ì „ì²´ -->
 	<select id="selectAll" parameterType="String" resultType="user">
 		select *
 		from users
 	
-				<if test="usertype!=null and 'ÀÇ»ç'.equals(usertype)">
+				<if test="usertype!=null and 'ì˜ì‚¬'.equals(usertype)">
 	
 					where role_authority = "ROLE_DOCTOR"
 	
 				</if>
 	
-				<if test="usertype!=null and '°£È£»ç'.equals(usertype)">
+				<if test="usertype!=null and 'ê°„í˜¸ì‚¬'.equals(usertype)">
 	
 					where role_authority = "ROLE_NURSE"
 	
