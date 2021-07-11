@@ -27,8 +27,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.mycompany.webapp.dto.Code;
 import com.mycompany.webapp.dto.User;
 import com.mycompany.webapp.security.JwtUtil;
+import com.mycompany.webapp.service.CodesService;
 import com.mycompany.webapp.service.UsersService;
 
 @RestController
@@ -41,6 +43,9 @@ public class AuthController {
 	
 	@Autowired
 	private UsersService usersService;
+	
+	@Autowired
+	private CodesService codesService;
 	
 	@PostMapping("/login")
 	public Map<String, String> userlogin(@RequestBody Map<String, String> user) {
@@ -71,14 +76,13 @@ public class AuthController {
 	public String test(HttpSession session) {
 	
 		return "success";
-	}	
-	
-	@PostMapping("/join")
-	public Map<String, String> join(@RequestBody User user) {
-		
-		usersService.join(user);
-		return null;
-		 
 	}
+	
+	@PostMapping("/codelogin")
+	public Map<String, Object> codelogin(@RequestBody Code code){
+		
+		return codesService.codeLogin(code);
+	}
+	
 
 }

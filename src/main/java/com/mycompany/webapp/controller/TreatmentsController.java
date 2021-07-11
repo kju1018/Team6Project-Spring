@@ -59,18 +59,18 @@ public class TreatmentsController {
 	@Autowired
 	private TestsService testsService;
 	
-	@PostMapping("/test")
-	public String test() {
-		Treatment treatment = new Treatment();
-		treatment.setPatientid(1);
-		treatment.setMemo("");
-		treatment.setStatus("진료 대기");
-		treatment.setTreatmentdate(new Date());
-		treatment.setUserid("user1");
-		Treatment newTreatment = treatmentsService.create(treatment);
-		System.out.println(newTreatment);
-		return "test";
-	}
+//	@PostMapping("/test")
+//	public String test() {
+//		Treatment treatment = new Treatment();
+//		treatment.setPatientid(1);
+//		treatment.setMemo("");
+//		treatment.setStatus("진료 대기");
+//		treatment.setTreatmentdate(new Date());
+//		treatment.setUserid("user1");
+//		Treatment newTreatment = treatmentsService.create(treatment);
+//		System.out.println(newTreatment);
+//		return "test";
+//	}
 	
 	@GetMapping("/treatments/{patientid}")
 	public List<Treatment> getTreatmentList(@PathVariable String patientid) {
@@ -119,6 +119,7 @@ public class TreatmentsController {
 		String userid = (String) prescription.get("userid");
 		int patientid = (int) prescription.get("patientid");
 		
+		logger.info(""+nowTreatment.getTreatmentdate());
 		//test테이블에 넣을 데이터 처리
 		Map<String, Object> testData = new HashMap<String, Object>();
 		testData.put("testList", testList);
