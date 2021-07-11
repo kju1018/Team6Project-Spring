@@ -4,24 +4,23 @@ import org.springframework.web.multipart.MultipartFile;
 
 public class TestImg {
 	private int imgid;
-	private MultipartFile tattach;
 	private String oname;
 	private String sname;
 	private String itype;
 	private String testdataid;
 	private int treatmentid;
-	
+	private MultipartFile battach;
+	public MultipartFile getBattach() {
+		return battach;
+	}
+	public void setBattach(MultipartFile battach) {
+		this.battach = battach;
+	}
 	public int getImgid() {
 		return imgid;
 	}
 	public void setImgid(int imgid) {
 		this.imgid = imgid;
-	}
-	public MultipartFile getTattach() {
-		return tattach;
-	}
-	public void setTattach(MultipartFile tattach) {
-		this.tattach = tattach;
 	}
 	public String getOname() {
 		return oname;

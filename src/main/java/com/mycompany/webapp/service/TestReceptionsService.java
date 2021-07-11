@@ -35,4 +35,26 @@ public class TestReceptionsService {
 		testreceptionsDao.testReceptionInsert(testreception);
 	}
 	
+	public int startpatient(int testreceptionid) {
+
+		testreceptionsDao.startpatient(testreceptionid);
+		return testreceptionsDao.startpatient(testreceptionid);
+	
+	}
+	
+	public int cancelpatient(int testreceptionid) {
+
+		testreceptionsDao.startpatient(testreceptionid);
+		return testreceptionsDao.cancelpatient(testreceptionid);
+	
+	}
+	
+	public int finishpatient(int testreceptionid) {
+
+		testreceptionsDao.startpatient(testreceptionid);
+		return testreceptionsDao.finishpatient(testreceptionid);
+	
+	}
+	
+	
 }
