@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import com.mycompany.webapp.dao.TestsDao;
 import com.mycompany.webapp.dto.Test;
+import com.mycompany.webapp.dto.TestReception;
 
 
 @Service
@@ -41,7 +42,21 @@ public class TestsService {
 	public int starttest(List<Test> test) {
 
 			testsDao.changeWaitingStatus(test);
-
 		return testsDao.changeWaitingStatus(test);
+	}
+	
+
+	public int canceltest(List<Test> test) {
+
+		testsDao.changeCancelStatus(test);
+
+	return testsDao.changeCancelStatus(test);
+	}
+	
+	public int finishtest(List<Test> test) {
+
+		testsDao.changeFinishStatus(test);
+
+	return testsDao.changeFinishStatus(test);
 	}
 }

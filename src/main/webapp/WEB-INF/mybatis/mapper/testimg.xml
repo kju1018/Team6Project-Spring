@@ -1,12 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.mycompany.webapp.dao.TestsImgsDao">
+<mapper namespace="com.mycompany.webapp.dao.TestImgsDao">
 
 	<insert id="insertImg" parameterType="testimg">
-		insert into testimgs 
+		insert into testimgs
 		(imgid, oname, sname, itype, testdataid, treatmentid)
 		values
 		(#{imgid},#{oname}, #{sname}, #{itype}, #{testdataid}, #{treatmentid} )
 	</insert>
+	
+	<select id="selectByTreatmentid" parameterType="int" resultType="testimg">
+		select imgid, oname, sname, itype, testdataid, treatmentid
+		from testimgs 
+		where treatmentid=#{treatmentid}
+	</select>
 
 </mapper>
