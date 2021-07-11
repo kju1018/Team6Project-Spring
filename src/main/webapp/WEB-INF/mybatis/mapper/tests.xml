@@ -26,12 +26,16 @@
 		where treatmentid = #{treatmentid} and td.testdataid = t.testdataid
 	</select>
 	
-	<update id="changeWaitingStatus" parameterType="list">
-		<foreach item="list" index="index" collection="listMap">
+	<update id="changeWaitingStatus" parameterType="test">
+		<foreach item="test" collection="list" separator="; " open="" close="">
 			update tests
 			set status = "진행중"
-			where testreceptionid = #{testreceptionid}
+			where testreceptionid = #{test.testreceptionid}
 		</foreach>
 	</update>
-
+<!-- 	<update id="changeWaitingStatus" parameterType="test">
+		update tests
+		set status = "진행중"
+		where testreceptionid = #{test.testreceptionid}
+	</update> -->
 </mapper>
