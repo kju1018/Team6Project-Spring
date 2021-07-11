@@ -1,5 +1,6 @@
 package com.mycompany.webapp.dto;
 
+
 public class Test {
 	private String status;
 	private String result;
@@ -9,6 +10,7 @@ public class Test {
 	private int treatmentid;
 	private int patientid;
 	private String userid;
+	
 	public String getTestdataname() {
 		return testdataname;
 	}

@@ -18,6 +18,7 @@
 		select testreceptionid, testdate, status, tr.patientid, patientname, ssn1, sex
 		from testreceptions tr, patients p
   	    where tr.patientid = p.patientid AND testdate between #{startdate} AND #{enddate}
+  	    order by testdate desc
 	</select>
 	
 	<!-- 해당 환자 클릭 시, 과거 검사 내역 -->
@@ -25,6 +26,28 @@
 		select testreceptionid, testdate, status, patientid
 		from testreceptions
 		where patientid = #{patientid}
+		order by testdate desc
 	</select>
+	
+	<update id="startpatient" parameterType="int">
+			update testreceptions
+			set status = "진행중"
+			where testreceptionid = #{testreceptionid}
+	</update>
+	
+		
+	<update id="cancelpatient" parameterType="int">
+			update testreceptions
+			set status = "대기중"
+			where testreceptionid = #{testreceptionid}
+	</update>
+	
+		
+	<update id="finishpatient" parameterType="int">
+			update testreceptions
+			set status = "검사완료"
+			where testreceptionid = #{testreceptionid}
+	</update>
+	
 
 </mapper>

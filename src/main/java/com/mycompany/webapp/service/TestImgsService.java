@@ -10,8 +10,12 @@ import com.mycompany.webapp.dto.TestImg;
 public class TestImgsService {
 	@Autowired TestImgsDao testimgsDao;
 	
-	public void insertImg(TestImg testimg) {
-		testimgsDao.insertImg(testimg);
+	public TestImg getTestimg(int treatmentid) {
+		return testimgsDao.selectByTreatmentid(treatmentid);
+	}
+
+	public int insertImg(TestImg testimg) {
+		return testimgsDao.insertImg(testimg);
 	}
 	
 }
