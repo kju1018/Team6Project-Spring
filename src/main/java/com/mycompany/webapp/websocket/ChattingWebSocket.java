@@ -17,17 +17,14 @@ import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
 @Component
-public class RedisWebSocket extends TextWebSocketHandler 
-                            implements MessageListener {
+public class ChattingWebSocket extends TextWebSocketHandler {
 	private static final Logger logger = 
-			LoggerFactory.getLogger(RedisWebSocket.class);
+			LoggerFactory.getLogger(ChattingWebSocket.class);
 	private List<Client> clients = new ArrayList<Client>();
 	
 	class Client {
 		WebSocketSession session;
-		String topic;
 		Client(WebSocketSession session) { this.session = session; }
-		void setTopic(String topic) { this.topic = topic; }
 		void close() {
 			try {
 				session.close();
@@ -48,13 +45,20 @@ public class RedisWebSocket extends TextWebSocketHandler
 	protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
 		String strJson = message.getPayload();
 		JSONObject jsonObject = new JSONObject(strJson);
-		String topic = jsonObject.getString("topic");
-		logger.info("handleTextMessage: " + topic);
+		String header = jsonObject.getString("header");
+		String from = jsonObject.getString("from");
+		String content = jsonObject.getString("message");
 		for(Client client : clients) {
-			if(client.session.getId() == session.getId()) {
-				client.topic = topic;
-				break;
+			if(header.equals("HELLO")) {
+				System.out.println("enter!!");
+				jsonObject.put("header", "HELLO");
+				jsonObject.put("from", from);
+				jsonObject.put("message", from+"님이 입장하셨습니다.");
+				client.session.sendMessage(new TextMessage(jsonObject.toString()));
+			}else if(header.equals("CHATTING")){
+				client.session.sendMessage(message);	
 			}
+			
 		}
 	}
 	
@@ -65,41 +69,11 @@ public class RedisWebSocket extends TextWebSocketHandler
 		while(iterator.hasNext()) {
 			Client client = iterator.next();
 			if(client.session.getId() == session.getId()) {
-				client.close();
+				client.session.close();
 				iterator.remove();
 			}
 		}
 	}
 	
-	//Redis 메시지 구독(Subscribe) 메소드
-	@Override
-	public void onMessage(Message message, byte[] pattern) {
-		logger.info(message.toString());
-		pushMessage(message);
-	}	
-	
-	private void pushMessage(Message message) {
-		JSONObject jsonObject = new JSONObject();
-		String topic =  new String(message.getChannel());
-		jsonObject.put("topic",topic);
-		jsonObject.put("content", new String(message.getBody()));
-		
-		TextMessage messages = new TextMessage(jsonObject.toString()); 
-		for(Client client : clients) {
-			try {
-				if(client.topic.endsWith("#")) {
-					String t = client.topic.split("#")[0];
-					if(topic.startsWith(t)) {
-						client.session.sendMessage(messages);
-					}
-				} else {
-					if(topic.equals(client.topic)) {
-						client.session.sendMessage(messages);
-					}
-				}
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
-	}
+
 }
