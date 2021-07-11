@@ -16,7 +16,13 @@ import javax.servlet.http.HttpServletResponse;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.HashOperations;
+import org.springframework.data.redis.core.ListOperations;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.ValueOperations;
+import org.springframework.data.redis.core.ZSetOperations;
+import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
+import org.springframework.data.redis.serializer.StringRedisSerializer;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -51,7 +57,7 @@ import com.mycompany.webapp.service.TreatmentsService;
 
 public class ReceptionController {
 	@Autowired
-	private RedisTemplate<String, String> redisTemplate;
+	private RedisTemplate<String, List<Map<String,Object>>> redisTemplate;
 	@Autowired
 	ReservationsService reservationservice;
 	@Autowired
@@ -266,5 +272,42 @@ public class ReceptionController {
 		
 	}
 	
+	@PostMapping("/savechatting")
+	public void SaveChatting(@RequestBody List<Map<String,Object>> list, HttpServletResponse response) {
+		try {
+			System.out.println("asdf");
+			redisTemplate.setKeySerializer(new StringRedisSerializer());
+
+			redisTemplate.setValueSerializer(new GenericJackson2JsonRedisSerializer());
+			ValueOperations<String,List<Map<String,Object>>> listOpertions =  redisTemplate.opsForValue();
+			redisTemplate.delete("chatArray");
+			listOpertions.set("chatArray", list);
+			response.setContentType("application/json; charset=UTF-8");
+			PrintWriter pw = response.getWriter();
+			
+			JSONObject jsonObject = new JSONObject();
+			jsonObject.put("result", "success");
+			pw.println(jsonObject.toString());
+			pw.flush();
+			pw.close();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
+	@GetMapping("/loadchatting")
+	public List<Map<String,Object>> LoadChatting() {
+		redisTemplate.setKeySerializer(new StringRedisSerializer());
+
+		redisTemplate.setValueSerializer(new GenericJackson2JsonRedisSerializer());
+		ValueOperations<String,List<Map<String,Object>>> valueOpertions =  redisTemplate.opsForValue();
+		List<Map<String,Object>> list = valueOpertions.get("chatArray");
+		if(list==null) {
+			list= new ArrayList<Map<String,Object>>();
+		}
+		return list;
+		
+		
+	}
 	
 }

@@ -75,28 +75,26 @@ public class RedisWebSocket extends TextWebSocketHandler
 	@Override
 	public void onMessage(Message message, byte[] pattern) {
 		logger.info(message.toString());
-		String topic = new String(message.getChannel());
-		String content = new String(message.getBody());
-		logger.info("onMessage: " + topic + " - " + content);
-		pushMessage(topic, content);
+		pushMessage(message);
 	}	
 	
-	private void pushMessage(String topic, String content) {
+	private void pushMessage(Message message) {
 		JSONObject jsonObject = new JSONObject();
-		jsonObject.put("topic", topic);
-		jsonObject.put("content", content);
+		String topic =  new String(message.getChannel());
+		jsonObject.put("topic",topic);
+		jsonObject.put("content", new String(message.getBody()));
 		
-		TextMessage message = new TextMessage(jsonObject.toString()); 
+		TextMessage messages = new TextMessage(jsonObject.toString()); 
 		for(Client client : clients) {
 			try {
 				if(client.topic.endsWith("#")) {
 					String t = client.topic.split("#")[0];
 					if(topic.startsWith(t)) {
-						client.session.sendMessage(message);
+						client.session.sendMessage(messages);
 					}
 				} else {
 					if(topic.equals(client.topic)) {
-						client.session.sendMessage(message);
+						client.session.sendMessage(messages);
 					}
 				}
 			} catch (Exception e) {

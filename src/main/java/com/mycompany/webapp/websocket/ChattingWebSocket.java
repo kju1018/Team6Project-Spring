@@ -69,7 +69,7 @@ public class ChattingWebSocket extends TextWebSocketHandler {
 		while(iterator.hasNext()) {
 			Client client = iterator.next();
 			if(client.session.getId() == session.getId()) {
-				client.close();
+				client.session.close();
 				iterator.remove();
 			}
 		}
