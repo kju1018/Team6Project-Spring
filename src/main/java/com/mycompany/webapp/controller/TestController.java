@@ -62,7 +62,7 @@ public class TestController {
 	public ArrayList<Test> StartTest(@RequestBody ArrayList<List<Test>> checkedList) {
 		System.out.println("DDDD"+checkedList.size());
 		
-		List test = new ArrayList();
+		List<Test> test = new ArrayList<Test>();
 		for(int i=0; i<checkedList.size(); i++) {
 			List<Test> tests = checkedList.get(i);
 			for(int j=0; j<tests.size(); j++) {
@@ -73,9 +73,8 @@ public class TestController {
 		}
 		
 		System.out.println(test);
-		//List<Object> list = checkedList.get(0);
-		
-		//List<Test> starttest = testsService.starttest(list);
+
+		testsService.starttest(test);
 		return null;
 	}
 	

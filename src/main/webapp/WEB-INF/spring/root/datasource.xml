@@ -8,7 +8,7 @@
 	<bean id="dataSource" 
 		  class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		  		<property name="driverClassName" value="com.mysql.cj.jdbc.Driver"/>
-		  		<property name="url" value="jdbc:mysql://kosa3.iptime.org:3306/team6_douzone?useSSL=false&amp;serverTimezone=UTC"/>
+		  		<property name="url" value="jdbc:mysql://kosa3.iptime.org:3306/team6_douzone?useSSL=false&amp;serverTimezone=Asia/Seoul&amp;allowMultiQueries=true"/>
 		  		<property name="username" value="team6_douzone"/>
 		  		<property name="password" value="team6_douzone_kosa"/>
 	</bean>
