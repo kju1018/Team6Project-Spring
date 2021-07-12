@@ -44,6 +44,10 @@ public class UsersService {
 	public List<User> getUserList(String usertype) {
 		return usersDao.selectAll(usertype);
 	}
+	
+	public User getUser(String userid) {
+		return usersDao.selectByUserid(userid);
+	}
 
 
 }

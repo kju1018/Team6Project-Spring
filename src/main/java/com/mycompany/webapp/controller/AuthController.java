@@ -49,22 +49,35 @@ public class AuthController {
 	
 	@PostMapping("/login")
 	public Map<String, String> userlogin(@RequestBody Map<String, String> user) {
-		String uid = user.get("userid");
+		String userid = user.get("userid");
 		String upassword = user.get("userpassword");
-		
+		int codenumber = Integer.parseInt(user.get("codenumber"));
+		logger.info(user.toString());
 		//사용자 인증하기
-		UsernamePasswordAuthenticationToken authReq = new UsernamePasswordAuthenticationToken(uid, upassword);
+		UsernamePasswordAuthenticationToken authReq = new UsernamePasswordAuthenticationToken(userid, upassword);
 	    Authentication authentication = authenticationManager.authenticate(authReq);
 	    SecurityContext securityContext = SecurityContextHolder.getContext();
 	    securityContext.setAuthentication(authentication);
 	    
-	    //JWT 토큰 생성
-	    String authToken = JwtUtil.createToken(uid);
-		
 	    //JSON 응답 보내기
 		Map<String, String> map = new HashMap<>();
-		map.put("userid", uid);
+	    //로그인 유저 정보 가져오기
+	    User newUser = usersService.getUser(userid);
+	    
+	    //해당 병원 계정이 아닐경우
+	    if(newUser.getCodenumber() != codenumber) {
+	    	map.put("state", "err_nullAuth");
+	    	return map;
+	    }
+	    
+	    //JWT 토큰 생성
+	    String authToken = JwtUtil.createToken(userid);
+
+		map.put("state", "success");
+		map.put("userid", userid);
 		map.put("authToken", authToken);
+		map.put("role_authority", newUser.getRole_authority());
+//		map.put("username", newUser.getUsername());
 		return map;
 	}
 	

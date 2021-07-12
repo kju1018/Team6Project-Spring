@@ -38,14 +38,18 @@ public class JwtAuthenticationFilter extends GenericFilterBean {
 	
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+
 		//JWT 토큰이 요청 헤더로 전송된 경우
 		String jwt = ((HttpServletRequest) request).getHeader("authToken");
 		if(jwt == null || jwt.trim().equals("")) {
 			//JWT가 요청 파라미터 전달된 경우
 			//<img src="download?bno=3&authToken=xxxx"/>
+			
 			jwt = request.getParameter("authToken");
 		}
-		if(jwt != null && !jwt.trim().equals("")) {
+
+		//TODO: 왜 "null"로 들어오지?
+		if(jwt != null && !jwt.trim().equals("") && !jwt.equals("null")) {
 		    //유효한 JWT 토큰인지 확인
 			if(JwtUtil.validateToken(jwt)) {
 				//JWT에서 uid 얻기
@@ -58,7 +62,6 @@ public class JwtAuthenticationFilter extends GenericFilterBean {
 				SecurityContextHolder.getContext().setAuthentication(authentication);
 			}
 		}
-    	
         chain.doFilter(request, response);
     }  
 }
