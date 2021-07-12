@@ -5,7 +5,7 @@
 	<!-- testreceptionid로 testdate와 testdataid 불러옴 -->
   	<select id="selectbyTestReceptionid" resultType="test">
   		select t.testdataid, patientid, userid, testreceptionid, result, status,
-				testdataname, testcontainer, testtype, groupcode, groupname, testunit, min, max
+				testdataname, testcontainer, testtype, groupcode, groupname, testunit, min, max, treatmentid
 		from tests t, testsdatas td 
 		where t.testreceptionid = #{testreceptionid} AND t.testdataid = td.testdataid
   	</select>
@@ -25,6 +25,12 @@
 		from testsdatas td, tests t
 		where treatmentid = #{treatmentid} and td.testdataid = t.testdataid
 	</select>
+	
+	<update id="result" parameterType="test">
+		update tests
+		set result = #{result}
+		where testreceptionid = #{testreceptionid} AND testdataid = #{testdataid}
+	</update>
 	
 	<update id="changeWaitingStatus" parameterType="test">
 		<foreach item="test" collection="list" separator="; " open="" close="">

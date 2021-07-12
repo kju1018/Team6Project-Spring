@@ -39,6 +39,12 @@ public class TestsService {
 		return testsDao.selectByTreatmentId(treatmentid);
 	}
 	
+	public int result(Test test) {
+
+		testsDao.result(test);
+	return testsDao.result(test);
+}
+	
 	public int starttest(List<Test> test) {
 
 			testsDao.changeWaitingStatus(test);

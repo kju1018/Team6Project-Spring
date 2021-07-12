@@ -16,6 +16,8 @@ public interface TestsDao {
 	public List<Test> selectbyTestReceptionid(@Param("testreceptionid") int testreceptionid);
 	public List<Test> selectByTreatmentId(int treatmentid);
 	
+	public int result(Test test);
+	
 	public int changeWaitingStatus(List<Test> test);
 	public int changeCancelStatus(List<Test> test);
 	public int changeFinishStatus(List<Test> test);
