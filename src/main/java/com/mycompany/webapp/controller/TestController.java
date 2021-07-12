@@ -71,6 +71,13 @@ public class TestController {
 		return testreceptionlistbyid;
 	}   
 	
+	@PutMapping("/result") 
+	public int Result (@RequestBody Test test){
+		System.out.println("result"+ test);
+		testsService.result(test);
+		return testsService.result(test);
+	}
+	
 	@PutMapping("/starttest")
 	public int StartTest(@RequestBody ArrayList<List<Test>> checkedList) {
 		String success = "성공";
