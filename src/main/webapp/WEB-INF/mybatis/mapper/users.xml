@@ -12,7 +12,9 @@
 	</insert>
 	
 	<select id="selectByUserid" parameterType="string" resultType="user">
-		select * from users where userid = #{userid}
+		select userid, username, userroom, role_authority, phonenumber, sex, codenumber
+		from users 
+		where userid = #{userid}
 	</select>
 
 	<!-- 전체 임직원 데이터 불러오기 -  의사 / 간호사 / 전체 -->
