@@ -30,6 +30,6 @@ public class PatientsService {
 	}
 	//특정환자 가져오기
 	public Patient getPatient(int patientid) {
-		return patientsDao.selectByPatient(patientid);
+		return patientsDao.selectByPatientid(patientid);
 	}
 }

@@ -26,6 +26,7 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -45,12 +46,14 @@ import com.mycompany.webapp.dto.Test;
 import com.mycompany.webapp.dto.TestData;
 import com.mycompany.webapp.dto.TestReception;
 import com.mycompany.webapp.dto.Treatment;
+import com.mycompany.webapp.dto.User;
 import com.mycompany.webapp.service.DiagnosesService;
 import com.mycompany.webapp.service.DrugsService;
 import com.mycompany.webapp.service.PatientsService;
 import com.mycompany.webapp.service.ReceptionsService;
 import com.mycompany.webapp.service.ReservationsService;
 import com.mycompany.webapp.service.TreatmentsService;
+import com.mycompany.webapp.service.UsersService;
 
 @RestController
 @RequestMapping("/reception")
@@ -70,6 +73,8 @@ public class ReceptionController {
 	ReceptionsService receptionsService;
 	@Autowired
 	TreatmentsService treatmentsService;
+	@Autowired
+	UsersService usersService;
 	//전체 예약정보 가져오기
 	@GetMapping("/reservationlist")
 	public List<Reservation> ReservationList() {
@@ -134,6 +139,21 @@ public class ReceptionController {
 		return patient.getPatientid();
 	}
 	
+	//전체 진료정보 불러오기 + 의료진 정보도 추가
+	@GetMapping("/treatments/{patientid}")
+	public Map<String,Object> TreatmentList(@PathVariable String patientid) {
+		List<Treatment> treatmentlist =  treatmentsService.getTreatments(patientid);
+		List<User>treatmentuserlist = new ArrayList<>();
+		for(int i=0; i<treatmentlist.size(); i++) {
+			User user = usersService.getUser(treatmentlist.get(i).getUserid());
+			treatmentuserlist.add(user);
+		}
+		Map<String,Object> map = new HashMap<String,Object>();
+		map.put("treatmentlist", treatmentlist );
+		map.put("userlist", treatmentuserlist);
+		return map;
+	}
+	
 	//해당 진료의 상세정보 불러오기
 	@GetMapping("/treatmentdetail")
 	public Map<String,Object> TreatmentDetail(int treatmentid) {
@@ -195,24 +215,45 @@ public class ReceptionController {
 		Treatment newtreatment =treatmentsService.create(treatment);
 		return newtreatment ;
 	}
-	//전체 진료정보 가져오기
+	//오늘날짜의 진료데이터가져오기
 	@GetMapping("/treatmentlist")
-	public List<Treatment> TreatmentList() {
-		List<Treatment> list= receptionsService.GetTreatmentData();
+	public Map<String,Object> TreatmentList() {
+		List<Treatment> treatmentlist= receptionsService.GetTreatmentData();
+		List<User>treatmentuserlist = new ArrayList<>();
+		List<Patient>treatmentpatientlist = new ArrayList<>();
+		for(int i=0; i<treatmentlist.size(); i++) {
+			User user = usersService.getUser(treatmentlist.get(i).getUserid());
+			Patient patient = patientservice.getPatient(treatmentlist.get(i).getPatientid());
+			treatmentuserlist.add(user);
+			treatmentpatientlist.add(patient);
+		}
 		
-		return list;
+		Map<String,Object> map = new HashMap<String,Object>();
+		map.put("treatmentlist", treatmentlist );
+		map.put("userlist", treatmentuserlist);
+		map.put("patientlist", treatmentpatientlist);
+		return map;
 	}
-	//전체 접수된 검사데이터 가져오기
+	//오늘 날짜의 접수된 검사데이터 가져오기
 	@GetMapping("/testreceptionlist")
-	public List<TestReception> TestReceptionList() {
-		List<TestReception> list= receptionsService.GetTestReceptionData();
-		return list;
+	public Map<String,Object> TestReceptionList() {
+		List<TestReception> testlist= receptionsService.GetTestReceptionData();
+		List<Patient>treatmentpatientlist = new ArrayList<>();
+		for(int i=0; i<testlist.size(); i++) {
+			Patient patient = patientservice.getPatient(testlist.get(i).getPatientid());
+			treatmentpatientlist.add(patient);
+		}
+		
+		Map<String,Object> map = new HashMap<String,Object>();
+		map.put("testlist", testlist );
+		map.put("patientlist", treatmentpatientlist);
+		return map;
 	}
 	//검사 접수하기
 	@PostMapping("/receptiontest")
 	public TestReception ReceptionTest(@RequestBody Map<String,Object>json) {
 		int patientid = Integer.parseInt(json.get("patientid").toString());
-		System.out.println(patientid);
+		System.out.println(json);
 		//TestReception만들기
 		TestReception testreception = new TestReception();
 		testreception.setTestdate(new Date());
@@ -222,9 +263,11 @@ public class ReceptionController {
 		//선택된 검사들의 testreceptionid 칼럼에 만든 testreception의 id값 넣어주기
 		int testreceptionid = testreception.getTestreceptionid();
 		List<String> arr = (ArrayList<String>)json.get("testdataidlist");
+		System.out.println(json.get("testdataidlist"));
 		ReceptedTestDataParameter receptedparameter = new ReceptedTestDataParameter();
 		receptedparameter.setTestreceptionid(testreceptionid);
 		receptedparameter.setTestdataidlist(arr);
+		receptedparameter.setPatientid(patientid);
 		receptionsService.UpdateTestList(receptedparameter);
 
 		return testreception;

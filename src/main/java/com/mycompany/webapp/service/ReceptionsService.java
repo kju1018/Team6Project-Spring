@@ -40,7 +40,7 @@ public class ReceptionsService {
 		return testdata;
 	}
 	
-	//오늘날짜의 검사데이터가져오기
+	//오늘날짜의 진료데이터가져오기
 	public List<Treatment> GetTreatmentData() {
 		List<Treatment> list= receptionsDao.selectAllTreatment();
 		return list;
