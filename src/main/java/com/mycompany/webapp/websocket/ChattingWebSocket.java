@@ -39,6 +39,11 @@ public class ChattingWebSocket extends TextWebSocketHandler {
 		logger.info("afterConnectionEstablished: " + session.getId());
 		Client client = new Client(session);
 		clients.add(new Client(session));
+		Iterator<Client> iterator = clients.iterator();
+		while(iterator.hasNext()) {
+			Client cl = iterator.next();
+			System.out.println(cl.session.getId());
+		}
 	}
 	
 	@Override
@@ -48,6 +53,7 @@ public class ChattingWebSocket extends TextWebSocketHandler {
 		String header = jsonObject.getString("header");
 		String from = jsonObject.getString("from");
 		String content = jsonObject.getString("message");
+		System.out.println("handle!!");
 		for(Client client : clients) {
 			if(header.equals("HELLO")) {
 				System.out.println("enter!!");

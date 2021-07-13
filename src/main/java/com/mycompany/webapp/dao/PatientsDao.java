@@ -17,7 +17,7 @@ import com.mycompany.webapp.dto.Reservation;
 		//전체환자 가져오기
 		public List<Patient> selectAll();
 		//특정환자 가져오기
-		public Patient selectByPatient(int patientid);
+		public Patient selectByPatientid(int patientid);
 	}
 
 
