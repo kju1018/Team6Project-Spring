@@ -27,11 +27,13 @@ import com.mycompany.webapp.dto.Drug;
 import com.mycompany.webapp.dto.Patient;
 import com.mycompany.webapp.dto.Test;
 import com.mycompany.webapp.dto.TestData;
+import com.mycompany.webapp.dto.TestImg;
 import com.mycompany.webapp.dto.Treatment;
 import com.mycompany.webapp.service.DiagnosesService;
 import com.mycompany.webapp.service.DrugsService;
 import com.mycompany.webapp.service.PatientsService;
 import com.mycompany.webapp.service.TestDatasService;
+import com.mycompany.webapp.service.TestImgsService;
 import com.mycompany.webapp.service.TestsService;
 import com.mycompany.webapp.service.TreatmentsService;
 
@@ -58,6 +60,9 @@ public class TreatmentsController {
 	
 	@Autowired
 	private TestsService testsService;
+	
+	@Autowired
+	private TestImgsService testImgsService;
 	
 //	@PostMapping("/test")
 //	public String test() {
@@ -157,10 +162,22 @@ public class TreatmentsController {
 	//------------------------------------
 	
 	//환자 불러오기-----------------------
-	@GetMapping("/getpatientList")
+	@GetMapping("/getpatientlist")
 	public List<Patient> getPatientList() {
 		List<Patient> patientList = patientsService.getPatientList();
 		return patientList;
+	}
+	
+	
+	
+	//테스트 이미지 불러오기
+	@GetMapping("/getimgList")
+	public List<TestImg> getImgList(int treatmentid, String testdataid) {
+		Map<String, Object> map = new HashMap();
+		map.put("treatmentid", treatmentid);
+		map.put("testdataid", testdataid);
+		List<TestImg> imgList = testImgsService.getImgList(map);
+		return imgList;
 	}
 	
 	

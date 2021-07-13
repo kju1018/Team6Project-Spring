@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.mycompany.webapp.dao.TreatmentsDao;
+import com.mycompany.webapp.dto.TestImg;
 import com.mycompany.webapp.dto.Treatment;
 
 @Service

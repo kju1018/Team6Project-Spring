@@ -58,8 +58,7 @@ public class UserController {
 		return usersService.disable(userid);
 	
 	}
-	
-	
+
 	@PutMapping("/enable/{userid}")
 	public Map<String, String> enable(@PathVariable String userid) {
 		return usersService.enable(userid);
