@@ -31,8 +31,6 @@ public class UsersService {
 			BCryptPasswordEncoder bpe = new BCryptPasswordEncoder();
 			user.setUserpassword(bpe.encode(user.getUserpassword()));
 			user.setUserenabled(1);
-			user.setCodenumber(1);
-			
 			usersDao.insert(user);
 			map.put("state", "success");
 		} else {
@@ -48,6 +46,54 @@ public class UsersService {
 	public User getUser(String userid) {
 		return usersDao.selectByUserid(userid);
 	}
+	
+	public Map<String, String> updateUser(User user) {
+		Map<String, String> map = new HashMap<String, String>();
+		BCryptPasswordEncoder bpe = new BCryptPasswordEncoder();
+		user.setUserpassword(bpe.encode(user.getUserpassword()));
+		usersDao.updateUser(user);
+		map.put("state", "success");
+		
+		return map;
+	}
 
+	public Map<String, String> deletUser(String userid) {
+		Map<String, String> map = new HashMap<String, String>();
+		int row = usersDao.deleteUser(userid);
+		if(row > 0) {
+			map.put("state", "success");
+			
+		} else {
+			map.put("state", "failure");
+		}
+		
+		return map;
+	}
+	
+	public Map<String, String> disable(String userid) {
+		Map<String, String> map = new HashMap<String, String>();
+		int row = usersDao.disableUser(userid);
+		if(row > 0) {
+			map.put("state", "success");
+			
+		} else {
+			map.put("state", "failure");
+		}
+		
+		return map;
+	}
+	
+	public Map<String, String> enable(String userid) {
+		Map<String, String> map = new HashMap<String, String>();
+		int row = usersDao.enableUser(userid);
+		if(row > 0) {
+			map.put("state", "success");
+			
+		} else {
+			map.put("state", "failure");
+		}
+		
+		return map;
+	}
 
 }

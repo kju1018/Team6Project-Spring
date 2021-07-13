@@ -73,7 +73,6 @@ public class TestController {
 	
 	@PutMapping("/result") 
 	public int Result (@RequestBody Test test){
-		//System.out.println("result"+ test);
 		testsService.result(test);
 		return testsService.result(test);
 	}
