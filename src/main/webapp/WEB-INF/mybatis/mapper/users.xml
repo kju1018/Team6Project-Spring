@@ -14,7 +14,7 @@
 	<select id="selectByUserid" parameterType="string" resultType="user">
 		select userid, username, userroom, role_authority, phonenumber, sex, codenumber
 		from users 
-		where userid = #{userid}
+		where userid = #{userid} and userenabled = 1
 	</select>
 
 	<!-- 전체 임직원 데이터 불러오기 -  의사 / 간호사 / 전체 -->
@@ -22,18 +22,40 @@
 		select *
 		from users
 	
-				<if test="usertype!=null and '의사'.equals(usertype)">
+		<if test="usertype!=null and '의사'.equals(usertype)">
+
+			where role_authority = "ROLE_DOCTOR" and userenabled = 1
+
+		</if>
+
+		<if test="usertype!=null and '간호사'.equals(usertype)">
+
+			where role_authority = "ROLE_NURSE" and userenabled = 1
+
+		</if>					
 	
-					where role_authority = "ROLE_DOCTOR"
-	
-				</if>
-	
-				<if test="usertype!=null and '간호사'.equals(usertype)">
-	
-					where role_authority = "ROLE_NURSE"
-	
-				</if>					
-	
-			
 	</select> 
+	
+	<update id="updateUser">
+		update users
+		set userpassword = #{userpassword}
+		where userid = #{userid}
+	</update>
+	
+	<delete id="deleteUser">
+		delete from users where userid = #{userid}
+	</delete>
+	
+	<update id="disableUser">
+		update users
+		set userenabled = 0
+		where userid = #{userid}
+	</update>
+	
+		
+	<update id="enableUser">
+		update users
+		set userenabled = 1
+		where userid = #{userid}
+	</update>
 </mapper>
