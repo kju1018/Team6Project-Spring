@@ -73,7 +73,6 @@ public class TestController {
 	
 	@PutMapping("/result") 
 	public int Result (@RequestBody Test test){
-		System.out.println("result"+ test);
 		testsService.result(test);
 		return testsService.result(test);
 	}
@@ -88,7 +87,7 @@ public class TestController {
 			List<Test> tests = checkedList.get(i);
 			for(int j=0; j<tests.size(); j++) {
 				tests.get(j);
-				System.out.println(tests.get(j));
+				//ystem.out.println(tests.get(j));
 				test.add(tests.get(j));
 			}
 		}
@@ -102,7 +101,7 @@ public class TestController {
 	@PutMapping("/teststartpatient/{testreceptionid}") 
 	public int StartsPatient (@PathVariable int testreceptionid){
 		String success = "성공";
-		System.out.println(testreceptionid);
+		//System.out.println(testreceptionid);
 		testreceptionsService.startpatient(testreceptionid);
 		return testreceptionsService.startpatient(testreceptionid);
 	}
@@ -137,14 +136,14 @@ public class TestController {
 	
 	@PutMapping("/finishtest")
 	public int FinishTest(@RequestBody ArrayList<List<Test>> checkedList) {
-		System.out.println("DDDD"+checkedList.size());
+		//System.out.println("DDDD"+checkedList.size());
 		
 		List<Test> test = new ArrayList<Test>();
 		for(int i=0; i<checkedList.size(); i++) {
 			List<Test> tests = checkedList.get(i);
 			for(int j=0; j<tests.size(); j++) {
 				tests.get(j);
-				System.out.println(tests.get(j));
+				//System.out.println(tests.get(j));
 				test.add(tests.get(j));
 			}
 		}
@@ -157,6 +156,7 @@ public class TestController {
 	
 	@PutMapping("/testfinishpatient/{testreceptionid}") 
 	public int FinishPatient (@PathVariable int testreceptionid){
+		System.out.println("dd");
 		testreceptionsService.finishpatient(testreceptionid);
 		return testreceptionsService.finishpatient(testreceptionid);
 	}
@@ -181,6 +181,7 @@ public class TestController {
 		}
 		testimgsService.insertImg(testimg);
 		testimg.setBattach(null); //JSON으로 표현불가하므로 null 처리
+
 		return testimg;
 	}
 	
