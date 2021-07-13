@@ -14,7 +14,7 @@
 	<select id="selectByUserid" parameterType="string" resultType="user">
 		select userid, username, userroom, role_authority, phonenumber, sex, codenumber
 		from users 
-		where userid = #{userid} and userenabled = 1
+		where userid = #{userid}
 	</select>
 
 	<!-- 전체 임직원 데이터 불러오기 -  의사 / 간호사 / 전체 -->
@@ -24,13 +24,12 @@
 	
 		<if test="usertype!=null and '의사'.equals(usertype)">
 
-			where role_authority = "ROLE_DOCTOR" and userenabled = 1
-
+			where role_authority = "ROLE_DOCTOR"
 		</if>
 
 		<if test="usertype!=null and '간호사'.equals(usertype)">
 
-			where role_authority = "ROLE_NURSE" and userenabled = 1
+			where role_authority = "ROLE_NURSE"
 
 		</if>					
 	

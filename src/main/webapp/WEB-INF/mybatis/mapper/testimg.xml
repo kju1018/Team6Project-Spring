@@ -14,5 +14,11 @@
 		from testimgs 
 		where treatmentid=#{treatmentid}
 	</select>
+	
+	<select id="selectById" parameterType="map" resultType="testimg">
+		select imgid, oname, sname, itype, testdataid, treatmentid
+		from testimgs 
+		where treatmentid=#{treatmentid} and testdataid = #{testdataid}
+	</select>
 
 </mapper>

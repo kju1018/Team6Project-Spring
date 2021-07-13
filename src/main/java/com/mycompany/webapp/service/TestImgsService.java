@@ -1,5 +1,8 @@
 package com.mycompany.webapp.service;
 
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,4 +21,8 @@ public class TestImgsService {
 		return testimgsDao.insertImg(testimg);
 	}
 	
+	public List<TestImg> getImgList(Map<String, Object> testinfo){
+		List<TestImg> imgList = testimgsDao.selectById(testinfo);
+		return imgList;
+	}
 }
