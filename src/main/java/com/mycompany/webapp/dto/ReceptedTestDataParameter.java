@@ -5,7 +5,14 @@ import java.util.List;
 public class ReceptedTestDataParameter {
 	int testreceptionid;
 	List<String> testdataidlist;
+	int patientid;
 	
+	public int getPatientid() {
+		return patientid;
+	}
+	public void setPatientid(int patientid) {
+		this.patientid = patientid;
+	}
 	public int getTestreceptionid() {
 		return testreceptionid;
 	}

@@ -53,8 +53,9 @@
 	testreceptionid=#{testreceptionid}
 	where 
 		<foreach collection="testdataidlist" item="testdataid" separator="or">
-			testdataid= #{testdataid}
+			testdataid= #{testdataid} and testreceptionid is null 
 		</foreach>	
+		and patientid = #{patientid}
 </update>
 
 
