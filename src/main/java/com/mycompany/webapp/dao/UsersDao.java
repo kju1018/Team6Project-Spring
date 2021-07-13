@@ -13,4 +13,8 @@ public interface UsersDao {
 	public User selectByUserid(String userid);
 	public User selectAll();
 	public List<User> selectAll(String usertype);
+	public int updateUser(User user);
+	public int deleteUser(String userid);
+	public int disableUser(String userid);
+	public int enableUser(String userid);
 }
