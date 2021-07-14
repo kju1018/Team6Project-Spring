@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import com.mycompany.webapp.dao.TestsDao;
 import com.mycompany.webapp.dto.Test;
+import com.mycompany.webapp.dto.TestImg;
 import com.mycompany.webapp.dto.TestReception;
 
 
@@ -32,6 +33,11 @@ public class TestsService {
 		if(((List<Test>) testData.get("testList")).size() > 0 ) {
 			row = testsDao.insertList(testData);
 		}
+		return row;
+	}
+	
+	public int insert(TestImg testimg) { 
+		int row = testsDao.insertresult(testimg);
 		return row;
 	}
 	
