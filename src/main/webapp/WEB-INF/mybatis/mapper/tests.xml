@@ -19,6 +19,12 @@
 		</foreach>
 	</insert>
 	
+	<insert id="insertresult" parameterType="testimg">
+		update tests
+		set result = "첨부완료"
+		where treatmentid = #{treatmentid} AND testdataid = #{testdataid}
+	</insert>
+	
 	<select id="selectByTreatmentId" resultType="test">
 		select t.testdataid, testdataname, testcontainer, testtype, groupcode, groupname, testunit, min, max, status,
 				result, testreceptionid, treatmentid, userid, patientid
