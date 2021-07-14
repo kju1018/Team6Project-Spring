@@ -89,7 +89,7 @@ public class TreatmentsController {
 		}	
 	}
 	//처방받은 내역 불러오기
-	@GetMapping("/{treatmentid}")
+	@GetMapping("/getprescription/{treatmentid}")
 	public Map<String, List> getPrescriptionList(@PathVariable int treatmentid) {
 		Map<String, List> map = new HashMap<String, List>();
 		List<Drug> drugList = drugsService.getDrugsByTreatmentId(treatmentid);
@@ -100,6 +100,14 @@ public class TreatmentsController {
 		map.put("testsList", testsList);
 		return map;
 	}
+	
+	//처방받은 테스트 내역 불러오기(실시간을 위해)
+	@GetMapping("/gettestlist/{treatmentid}")
+	public List<Test> getTestList(@PathVariable int treatmentid) {
+		List<Test> testList = testsService.getTestsByTreatmentId(treatmentid);
+		return testList;
+	}
+	
 	
 	
 	/*
@@ -168,7 +176,12 @@ public class TreatmentsController {
 		return patientList;
 	}
 	
-	
+	//환자 정보 불러오기------
+	@GetMapping("/getpatient/{patientid}")
+	public Patient getPatient(@PathVariable int patientid) {
+		Patient patient = patientsService.getPatient(patientid);
+		return patient;
+	}
 	
 	//테스트 이미지 불러오기
 	@GetMapping("/getimgList")
