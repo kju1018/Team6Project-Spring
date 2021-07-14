@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import org.json.JSONObject;
 import org.slf4j.Logger;
@@ -15,6 +16,10 @@ import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Component
 public class RedisWebSocket extends TextWebSocketHandler 
@@ -79,12 +84,8 @@ public class RedisWebSocket extends TextWebSocketHandler
 	}	
 	
 	private void pushMessage(Message message) {
-		JSONObject jsonObject = new JSONObject();
 		String topic =  new String(message.getChannel());
-		jsonObject.put("topic",topic);
-		jsonObject.put("content", new String(message.getBody()));
-		
-		TextMessage messages = new TextMessage(jsonObject.toString()); 
+		TextMessage messages= new TextMessage(message.getBody()); 
 		for(Client client : clients) {
 			try {
 				if(client.topic.endsWith("#")) {
