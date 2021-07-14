@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import com.mycompany.webapp.dao.TestsDao;
 import com.mycompany.webapp.dto.Test;
+import com.mycompany.webapp.dto.TestImg;
 import com.mycompany.webapp.dto.TestReception;
 
 
@@ -22,16 +23,21 @@ public class TestsService {
 	@Autowired
 	private TestsDao testsDao;
 	
-	public List<Test> selectbyTestReceptionid(int testreceptionid) { //�젒�닔�뿉�꽌 �솚�옄 寃��궗 �젒�닔 �떆 �븘�슂
+	public List<Test> selectbyTestReceptionid(int testreceptionid) { 
 		List<Test> list = testsDao.selectbyTestReceptionid(testreceptionid);
 		return list;
 	}
 	
-	public int insertTestList(Map<String, Object> testData) { //吏꾨즺 �럹�씠吏��뿉�꽌 寃��궗 異붽�
+	public int insertTestList(Map<String, Object> testData) { 
 		int row = 0;
 		if(((List<Test>) testData.get("testList")).size() > 0 ) {
 			row = testsDao.insertList(testData);
 		}
+		return row;
+	}
+	
+	public int insert(TestImg testimg) { 
+		int row = testsDao.insertresult(testimg);
 		return row;
 	}
 	

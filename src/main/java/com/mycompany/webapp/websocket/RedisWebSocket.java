@@ -52,7 +52,7 @@ public class RedisWebSocket extends TextWebSocketHandler
 	@Override
 	protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
 		String strJson = message.getPayload();
-		JSONObject jsonObject = new JSONObject(strJson);
+		JSONObject jsonObject = new JSONObject(strJson); 
 		String topic = jsonObject.getString("topic");
 		logger.info("handleTextMessage: " + topic);
 		for(Client client : clients) {

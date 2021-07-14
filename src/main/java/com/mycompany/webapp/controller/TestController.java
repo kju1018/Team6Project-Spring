@@ -52,6 +52,8 @@ public class TestController {
 	
 	@GetMapping("/patientbytestdate")
 	public List<TestReception> getTestReceptionByTestdate (@RequestParam String startdate, @RequestParam String enddate) {
+		System.out.println(startdate);
+		System.out.println(enddate);
 		List<TestReception> list = testreceptionsService.getTestReceptionListByDate(startdate, enddate);
 		
 		return list;
@@ -73,7 +75,6 @@ public class TestController {
 	
 	@PutMapping("/result") 
 	public int Result (@RequestBody Test test){
-		System.out.println("result"+ test);
 		testsService.result(test);
 		return testsService.result(test);
 	}
@@ -88,7 +89,7 @@ public class TestController {
 			List<Test> tests = checkedList.get(i);
 			for(int j=0; j<tests.size(); j++) {
 				tests.get(j);
-				System.out.println(tests.get(j));
+				//ystem.out.println(tests.get(j));
 				test.add(tests.get(j));
 			}
 		}
@@ -102,7 +103,7 @@ public class TestController {
 	@PutMapping("/teststartpatient/{testreceptionid}") 
 	public int StartsPatient (@PathVariable int testreceptionid){
 		String success = "성공";
-		System.out.println(testreceptionid);
+		//System.out.println(testreceptionid);
 		testreceptionsService.startpatient(testreceptionid);
 		return testreceptionsService.startpatient(testreceptionid);
 	}
@@ -137,14 +138,14 @@ public class TestController {
 	
 	@PutMapping("/finishtest")
 	public int FinishTest(@RequestBody ArrayList<List<Test>> checkedList) {
-		System.out.println("DDDD"+checkedList.size());
+		//System.out.println("DDDD"+checkedList.size());
 		
 		List<Test> test = new ArrayList<Test>();
 		for(int i=0; i<checkedList.size(); i++) {
 			List<Test> tests = checkedList.get(i);
 			for(int j=0; j<tests.size(); j++) {
 				tests.get(j);
-				System.out.println(tests.get(j));
+				//System.out.println(tests.get(j));
 				test.add(tests.get(j));
 			}
 		}
@@ -157,6 +158,7 @@ public class TestController {
 	
 	@PutMapping("/testfinishpatient/{testreceptionid}") 
 	public int FinishPatient (@PathVariable int testreceptionid){
+		System.out.println("dd");
 		testreceptionsService.finishpatient(testreceptionid);
 		return testreceptionsService.finishpatient(testreceptionid);
 	}
@@ -164,9 +166,9 @@ public class TestController {
 	@PostMapping("/xray")
 	public TestImg create(TestImg testimg) {
 		System.out.println(testimg.getTreatmentid());
+		String treatmentid = testimg.getTestdataid();
 		logger.info(testimg.getTestdataid());
 		if(testimg.getBattach() != null && !testimg.getBattach().isEmpty()) {
-			String treatmentid = testimg.getTestdataid();
 			MultipartFile mf = testimg.getBattach();
 			System.out.println(mf);
 			testimg.setOname(mf.getOriginalFilename());
@@ -180,7 +182,9 @@ public class TestController {
 			}
 		}
 		testimgsService.insertImg(testimg);
+		testsService.insert(testimg);
 		testimg.setBattach(null); //JSON으로 표현불가하므로 null 처리
+
 		return testimg;
 	}
 	

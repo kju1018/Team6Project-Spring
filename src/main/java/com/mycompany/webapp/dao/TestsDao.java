@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import com.mycompany.webapp.dto.Test;
+import com.mycompany.webapp.dto.TestImg;
 import com.mycompany.webapp.dto.TestReception;
 
 @Mapper
@@ -17,6 +18,8 @@ public interface TestsDao {
 	public List<Test> selectByTreatmentId(int treatmentid);
 	
 	public int result(Test test);
+	
+	public int insertresult(TestImg testimg);
 	
 	public int changeWaitingStatus(List<Test> test);
 	public int changeCancelStatus(List<Test> test);
