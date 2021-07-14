@@ -298,7 +298,7 @@ public class ReceptionController {
 	
 	@RequestMapping("/sendRedisMessage")
 	public void sendRedisMessage(String topic, String content, HttpServletResponse response) {
-		try {
+		try {			
 			System.out.println(topic + " " + content);
 			redisTemplate.convertAndSend(topic, content);
 			response.setContentType("application/json; charset=UTF-8");
