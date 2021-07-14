@@ -52,6 +52,8 @@ public class TestController {
 	
 	@GetMapping("/patientbytestdate")
 	public List<TestReception> getTestReceptionByTestdate (@RequestParam String startdate, @RequestParam String enddate) {
+		System.out.println(startdate);
+		System.out.println(enddate);
 		List<TestReception> list = testreceptionsService.getTestReceptionListByDate(startdate, enddate);
 		
 		return list;
@@ -165,9 +167,9 @@ public class TestController {
 	@PostMapping("/xray")
 	public TestImg create(TestImg testimg) {
 		System.out.println(testimg.getTreatmentid());
+		String treatmentid = testimg.getTestdataid();
 		logger.info(testimg.getTestdataid());
 		if(testimg.getBattach() != null && !testimg.getBattach().isEmpty()) {
-			String treatmentid = testimg.getTestdataid();
 			MultipartFile mf = testimg.getBattach();
 			System.out.println(mf);
 			testimg.setOname(mf.getOriginalFilename());
@@ -181,6 +183,7 @@ public class TestController {
 			}
 		}
 		testimgsService.insertImg(testimg);
+		testsService.insert(testimg);
 		testimg.setBattach(null); //JSON으로 표현불가하므로 null 처리
 
 		return testimg;
