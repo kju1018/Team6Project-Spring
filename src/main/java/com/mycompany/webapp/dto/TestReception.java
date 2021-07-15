@@ -28,8 +28,15 @@ public class TestReception {
 	private String ssn1;
 	private String sex;
 	private int age;
+	private String result;
 	
 	
+	public String getResult() {
+		return result;
+	}
+	public void setResult(String result) {
+		this.result = result;
+	}
 	public String getPatientname() {
 		return patientname;
 	}
