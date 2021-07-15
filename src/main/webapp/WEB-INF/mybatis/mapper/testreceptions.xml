@@ -15,9 +15,9 @@
    
     <!-- 왼쪽에 date별로 리스트 목록 불러오기 -->
 	<select id="selectbyTestdate" parameterType="String" resultType="testreception">
-		select testreceptionid, testdate, status, tr.patientid, patientname, ssn1, sex
-		from testreceptions tr, patients p
-  	    where tr.patientid = p.patientid AND testdate between #{startdate} AND #{enddate}
+		select tr.testreceptionid, testdate, tr.status, tr.patientid, patientname, ssn1, sex, result
+		from testreceptions tr, patients p, tests t
+  	    where tr.patientid = p.patientid AND tr.testreceptionid = t.testreceptionid AND testdate between #{startdate} AND #{enddate}
   	    order by testdate desc
 	</select>
 	
