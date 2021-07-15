@@ -37,4 +37,12 @@
 	where patientid=#{patientid}
 </update>
 
+<!-- 환자 최종진료일 수정 -->
+<update id="updateLastTreatment" parameterType="int">
+	update patients set
+	lasttreatment=now()
+	
+	where patientid=#{patientid}
+</update>
+
 </mapper>

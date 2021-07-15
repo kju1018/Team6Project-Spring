@@ -18,6 +18,8 @@ import com.mycompany.webapp.dto.Reservation;
 		public List<Patient> selectAll();
 		//특정환자 가져오기
 		public Patient selectByPatientid(int patientid);
+		//최종진료일 수정
+		public int updateLastTreatment(int patientid);
 	}
 
 
