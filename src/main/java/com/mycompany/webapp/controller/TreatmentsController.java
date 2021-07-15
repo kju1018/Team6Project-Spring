@@ -138,11 +138,13 @@ public class TreatmentsController {
 		testData.put("userid", userid);
 		testData.put("patientid", patientid);
 		testData.put("treatmentid", nowTreatment.getTreatmentid());
-		logger.info(testData.toString());
+
 		testsService.insertTestList(testData);
 		
 		drugsService.insertDrugList(drugList);
 		diagnosesService.insertDiagnosesList(diagnosesList);
+		
+		patientsService.UpdateLastTreatment(patientid);
 
 		nowTreatment.setStatus("진료 완료");
 		treatmentsService.updateStatus(nowTreatment);
