@@ -139,6 +139,7 @@ public class ReceptionController {
 		return patient.getPatientid();
 	}
 	
+	
 	//전체 진료정보 불러오기 + 의료진 정보도 추가
 	@GetMapping("/treatments/{patientid}")
 	public Map<String,Object> TreatmentList(@PathVariable String patientid) {
@@ -350,6 +351,14 @@ public class ReceptionController {
 		}
 		return list;
 		
+		
+	}
+	
+	
+	
+	@GetMapping("/test1")
+	public void test() {
+		patientservice.UpdateLastTreatment(10);
 		
 	}
 	
