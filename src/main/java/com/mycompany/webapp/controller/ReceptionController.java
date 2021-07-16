@@ -1,6 +1,7 @@
 package com.mycompany.webapp.controller;
 
 import java.io.PrintWriter;
+import java.nio.charset.StandardCharsets;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -16,8 +17,11 @@ import javax.servlet.http.HttpServletResponse;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.connection.RedisConnection;
+import org.springframework.data.redis.connection.ReturnType;
 import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.ListOperations;
+import org.springframework.data.redis.core.RedisConnectionUtils;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.data.redis.core.ZSetOperations;
@@ -316,10 +320,10 @@ public class ReceptionController {
 		
 	}
 	
+	//채팅정보 저장하기
 	@PostMapping("/savechatting")
 	public void SaveChatting(@RequestBody List<Map<String,Object>> list, HttpServletResponse response) {
 		try {
-			System.out.println("asdf");
 			redisTemplate.setKeySerializer(new StringRedisSerializer());
 
 			redisTemplate.setValueSerializer(new GenericJackson2JsonRedisSerializer());
@@ -339,6 +343,7 @@ public class ReceptionController {
 		}
 		
 	}
+	//채팅정보 불러오기
 	@GetMapping("/loadchatting")
 	public List<Map<String,Object>> LoadChatting() {
 		redisTemplate.setKeySerializer(new StringRedisSerializer());
@@ -353,7 +358,33 @@ public class ReceptionController {
 		
 		
 	}
+	//userid로 user불러오기
+	@GetMapping("/getuser/{userid}")
+	public User GetUser(@PathVariable String userid) {
+		User user = usersService.getUser(userid);
+		return user;
+	}
 	
+	//서버의 네트워크 상태 가져오기
+	@GetMapping("/getnetworkstatus")
+	public Map<String,Object> GetNetworkStatus() {
+
+		
+		String ping = redisTemplate.getConnectionFactory().getConnection().ping();
+		Long DBsize = redisTemplate.getConnectionFactory().getConnection().dbSize();
+		
+		String script = "return redis.pcall('MEMORY', 'USAGE', KEYS[1])";
+	    String key = "test";
+	    RedisConnection redisConnection = RedisConnectionUtils.getConnection(redisTemplate.getConnectionFactory());
+	    Long Rss = (Long)(redisConnection.eval(script.getBytes(StandardCharsets.UTF_8),ReturnType.INTEGER, 1,key.getBytes(StandardCharsets.UTF_8)));
+	     RedisConnectionUtils.releaseConnection(redisConnection, redisTemplate.getConnectionFactory());
+		JSONObject jsonObject = new JSONObject();
+		jsonObject.put("ping", ping);
+		jsonObject.put("DBSize", DBsize);
+		jsonObject.put("Rss", Rss);
+		
+		return jsonObject.toMap();
+	}
 	
 	
 	@GetMapping("/test1")
