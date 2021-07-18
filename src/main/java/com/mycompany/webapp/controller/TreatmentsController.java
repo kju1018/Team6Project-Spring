@@ -1,5 +1,8 @@
 package com.mycompany.webapp.controller;
 
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -7,10 +10,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -193,6 +199,32 @@ public class TreatmentsController {
 		map.put("testdataid", testdataid);
 		List<TestImg> imgList = testImgsService.getImgList(map);
 		return imgList;
+	}
+	
+	// 이미지 다운로드
+	@GetMapping("/imgdownload/{imgid}")
+	public void download(@PathVariable int imgid, HttpServletResponse response) {
+		try {
+			TestImg testimg = testImgsService.getImgById(imgid);
+			String oname = testimg.getOname();
+			if(oname == null) return;
+			oname = new String(oname.getBytes("UTF-8"),"ISO-8859-1");
+			String sname = testimg.getSname();		
+			String battachspath = "C:/MyProjects/uploadfiles/" + sname;
+			String itype = testimg.getItype();
+	
+			response.setHeader("Content-Disposition", "attachment; filename=\""+oname+"\";");
+			response.setContentType(itype);
+
+			InputStream is = new FileInputStream(battachspath);
+			OutputStream os = response.getOutputStream();
+			FileCopyUtils.copy(is, os);
+			is.close();
+			os.flush();
+			os.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 	
 	

@@ -12,4 +12,5 @@ public interface TestImgsDao {
 	public TestImg selectByTreatmentid(int treatmentid);
 	public int insertImg(TestImg testimg);
 	public List<TestImg> selectById(Map<String, Object> testinfo);
+	public TestImg selectByImgid(int imgid);
 }
