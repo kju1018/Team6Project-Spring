@@ -15,7 +15,7 @@
 		(testdataid, treatmentid, patientid, userid, testreceptionid, result, status)
 		values
 		<foreach collection="testList" item="test" separator=",">
-		(#{test.testdataid},#{treatmentid}, #{patientid}, #{userid}, null, null, null, "대기중" )
+		(#{test.testdataid}, #{treatmentid}, #{patientid}, #{userid}, null, null, "대기중" )
 		</foreach>
 	</insert>
 	

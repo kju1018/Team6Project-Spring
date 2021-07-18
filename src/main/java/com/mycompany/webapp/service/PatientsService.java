@@ -32,4 +32,8 @@ public class PatientsService {
 	public Patient getPatient(int patientid) {
 		return patientsDao.selectByPatientid(patientid);
 	}
+	//최종 진료일 수정
+	public int UpdateLastTreatment(int patientid) {
+		return patientsDao.updateLastTreatment(patientid);
+	}
 }

@@ -25,4 +25,8 @@ public class TestImgsService {
 		List<TestImg> imgList = testimgsDao.selectById(testinfo);
 		return imgList;
 	}
+	
+	public TestImg getImgById(int imgid) {
+		return testimgsDao.selectByImgid(imgid);
+	}
 }
