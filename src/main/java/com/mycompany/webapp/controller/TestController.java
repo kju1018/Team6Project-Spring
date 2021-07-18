@@ -79,6 +79,14 @@ public class TestController {
 		return testsService.result(test);
 	}
 	
+	@PutMapping("/resultstatus/{testreceptionid}") 
+	public int ResultStatus (@PathVariable int testreceptionid){
+		String success = "성공";
+		//System.out.println(testreceptionid);
+		testreceptionsService.resultstatus(testreceptionid);
+		return testreceptionsService.resultstatus(testreceptionid);
+	}
+	
 	@PutMapping("/starttest")
 	public int StartTest(@RequestBody ArrayList<List<Test>> checkedList) {
 		String success = "성공";
