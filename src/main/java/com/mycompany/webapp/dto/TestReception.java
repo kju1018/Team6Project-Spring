@@ -12,6 +12,13 @@ public class TestReception {
 	private int patientid;
 	private String startdate;
 	private String enddate;
+	private String resultstatus;
+	public String getResultstatus() {
+		return resultstatus;
+	}
+	public void setResultstatus(String resultstatus) {
+		this.resultstatus = resultstatus;
+	}
 	public String getStartdate() {
 		return startdate;
 	}

@@ -29,6 +29,12 @@
 		order by testdate desc
 	</select>
 	
+	<update id="resultstatus" parameterType="int">
+			update testreceptions
+			set resultstatus = "입력완료"
+			where testreceptionid = #{testreceptionid}
+	</update>
+	
 	<update id="startpatient" parameterType="int">
 			update testreceptions
 			set status = "진행중"
