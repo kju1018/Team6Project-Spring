@@ -8,7 +8,7 @@ public class Notice {
 	private int noticeid;
 	private String title;
 	private String content;
-	private String uid;
+	private String userid;
 	@JsonFormat(pattern="yyyy-MM-dd")
 	private Date date;
 	
@@ -30,11 +30,11 @@ public class Notice {
 	public void setContent(String content) {
 		this.content = content;
 	}
-	public String getUid() {
-		return uid; 
+	public String getUserid() {
+		return userid; 
 	}
-	public void setUid(String uid) {
-		this.uid = uid;
+	public void setUserid(String userid) {
+		this.userid = userid;
 	}
 	public Date getDate() {
 		return date;
@@ -42,6 +42,13 @@ public class Notice {
 	public void setDate(Date date) {
 		this.date = date;
 	}
+	@Override
+	public String toString() {
+		return "Notice [noticeid=" + noticeid + ", title=" + title + ", content=" + content + ", userid=" + userid
+				+ ", date=" + date + "]";
+	}
+	
+	
 	
 	
 }
