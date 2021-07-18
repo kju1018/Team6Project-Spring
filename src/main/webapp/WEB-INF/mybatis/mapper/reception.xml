@@ -39,9 +39,9 @@
 <!-- 검사접수 데이터 삽입 -->
 <insert id="inserTtestReception" parameterType="testreception" useGeneratedKeys="true" keyProperty="testreceptionid">
 	insert into testreceptions
-   	(testreceptionid, testdate, status, patientid)
+   	(testreceptionid, testdate, status, patientid, resultstatus)
    	values
-   	(#{testreceptionid},#{testdate},#{status},#{patientid})
+   	(#{testreceptionid},#{testdate},#{status},#{patientid},#{resultstatus})
 </insert>
 <delete id="deleteByTestreceptionid" parameterType="int">
 	delete from testreceptions

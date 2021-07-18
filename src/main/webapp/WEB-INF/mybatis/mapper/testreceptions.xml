@@ -4,9 +4,9 @@
 
 	<insert id="testReceptionInsert" parameterType="testreception">
 		insert into testrecptions 
-		(testreceptionid, testdate, status, patientid)
+		(testreceptionid, testdate, status, patientid,resultstatus)
 		values
-		(#{testreceptionid},sysdate, #{status}, #{patientid})
+		(#{testreceptionid},sysdate, #{status}, #{patientid},#{resultstatus})
 	</insert>
 	
 	<delete id="deleteByReceptionid" parameterType="int">
