@@ -172,10 +172,10 @@ public class TestController {
 			MultipartFile mf = testimg.getBattach();
 			System.out.println(mf);
 			testimg.setOname(mf.getOriginalFilename());
-			testimg.setSname(treatmentid + "_"+ new Date() + "_" + mf.getOriginalFilename());
+			testimg.setSname(treatmentid + "_"+ new Date().getTime() + "_" + mf.getOriginalFilename());
 			testimg.setItype(mf.getContentType());
 			try {
-				File file = new File("C:/MyProjects/uploadfiles" + testimg.getSname());
+				File file = new File("C:/MyProjects/uploadfiles/" + testimg.getSname());
 				mf.transferTo(file);
 			} catch (Exception e) {
 				e.printStackTrace();
