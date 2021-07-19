@@ -264,6 +264,7 @@ public class ReceptionController {
 		testreception.setTestdate(new Date());
 		testreception.setPatientid(patientid);
 		testreception.setStatus("대기중");
+		testreception.setResultstatus("미입력");
 		receptionsService.inserTtestReception(testreception);
 		//선택된 검사들의 testreceptionid 칼럼에 만든 testreception의 id값 넣어주기
 		int testreceptionid = testreception.getTestreceptionid();

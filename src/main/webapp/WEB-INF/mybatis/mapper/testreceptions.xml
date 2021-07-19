@@ -4,9 +4,9 @@
 
 	<insert id="testReceptionInsert" parameterType="testreception">
 		insert into testrecptions 
-		(testreceptionid, testdate, status, patientid)
+		(testreceptionid, testdate, status, patientid,resultstatus)
 		values
-		(#{testreceptionid},sysdate, #{status}, #{patientid})
+		(#{testreceptionid},sysdate, #{status}, #{patientid},#{resultstatus})
 	</insert>
 	
 	<delete id="deleteByReceptionid" parameterType="int">
@@ -15,10 +15,10 @@
    
     <!-- 왼쪽에 date별로 리스트 목록 불러오기 -->
 	<select id="selectbyTestdate" parameterType="String" resultType="testreception">
-		select tr.testreceptionid, testdate, tr.status, tr.patientid, patientname, ssn1, sex, result
+		select *
 		from testreceptions tr, patients p, tests t
   	    where tr.patientid = p.patientid AND tr.testreceptionid = t.testreceptionid AND testdate between #{startdate} AND #{enddate}
-  	    order by testdate desc
+  	    group by tr.testreceptionid
 	</select>
 	
 	<!-- 해당 환자 클릭 시, 과거 검사 내역 -->
@@ -28,6 +28,12 @@
 		where patientid = #{patientid}
 		order by testdate desc
 	</select>
+	
+	<update id="resultstatus" parameterType="int">
+			update testreceptions
+			set resultstatus = "입력완료"
+			where testreceptionid = #{testreceptionid}
+	</update>
 	
 	<update id="startpatient" parameterType="int">
 			update testreceptions

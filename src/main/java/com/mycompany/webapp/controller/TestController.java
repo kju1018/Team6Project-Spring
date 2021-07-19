@@ -79,6 +79,14 @@ public class TestController {
 		return testsService.result(test);
 	}
 	
+	@PutMapping("/resultstatus/{testreceptionid}") 
+	public int ResultStatus (@PathVariable int testreceptionid){
+		String success = "성공";
+		//System.out.println(testreceptionid);
+		testreceptionsService.resultstatus(testreceptionid);
+		return testreceptionsService.resultstatus(testreceptionid);
+	}
+	
 	@PutMapping("/starttest")
 	public int StartTest(@RequestBody ArrayList<List<Test>> checkedList) {
 		String success = "성공";
@@ -172,10 +180,10 @@ public class TestController {
 			MultipartFile mf = testimg.getBattach();
 			System.out.println(mf);
 			testimg.setOname(mf.getOriginalFilename());
-			testimg.setSname(treatmentid + "_"+ new Date() + "_" + mf.getOriginalFilename());
+			testimg.setSname(treatmentid + "_"+ new Date().getTime() + "_" + mf.getOriginalFilename());
 			testimg.setItype(mf.getContentType());
 			try {
-				File file = new File("C:/MyProjects/uploadfiles" + testimg.getSname());
+				File file = new File("C:/MyProjects/uploadfiles/" + testimg.getSname());
 				mf.transferTo(file);
 			} catch (Exception e) {
 				e.printStackTrace();
