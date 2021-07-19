@@ -5,6 +5,7 @@ import java.nio.charset.StandardCharsets;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
@@ -41,6 +42,7 @@ import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.mycompany.webapp.dto.ChattingHistory;
 import com.mycompany.webapp.dto.Diagnoses;
 import com.mycompany.webapp.dto.Drug;
 import com.mycompany.webapp.dto.Patient;
@@ -51,6 +53,7 @@ import com.mycompany.webapp.dto.TestData;
 import com.mycompany.webapp.dto.TestReception;
 import com.mycompany.webapp.dto.Treatment;
 import com.mycompany.webapp.dto.User;
+import com.mycompany.webapp.service.ChattingsHistoryService;
 import com.mycompany.webapp.service.DiagnosesService;
 import com.mycompany.webapp.service.DrugsService;
 import com.mycompany.webapp.service.PatientsService;
@@ -79,6 +82,9 @@ public class ReceptionController {
 	TreatmentsService treatmentsService;
 	@Autowired
 	UsersService usersService;
+	@Autowired
+	ChattingsHistoryService chattingsHistoryService;
+	
 	//전체 예약정보 가져오기
 	@GetMapping("/reservationlist")
 	public List<Reservation> ReservationList() {
@@ -216,7 +222,6 @@ public class ReceptionController {
 	//진료 접수하기
 	@PostMapping("/receptiontreatment")
 	public Treatment ReceptionTreatment(@RequestBody Treatment treatment) {
-		System.out.println(treatment);
 		Treatment newtreatment =treatmentsService.create(treatment);
 		return newtreatment ;
 	}
@@ -258,7 +263,6 @@ public class ReceptionController {
 	@PostMapping("/receptiontest")
 	public TestReception ReceptionTest(@RequestBody Map<String,Object>json) {
 		int patientid = Integer.parseInt(json.get("patientid").toString());
-		System.out.println(json);
 		//TestReception만들기
 		TestReception testreception = new TestReception();
 		testreception.setTestdate(new Date());
@@ -269,7 +273,6 @@ public class ReceptionController {
 		//선택된 검사들의 testreceptionid 칼럼에 만든 testreception의 id값 넣어주기
 		int testreceptionid = testreception.getTestreceptionid();
 		List<String> arr = (ArrayList<String>)json.get("testdataidlist");
-		System.out.println(json.get("testdataidlist"));
 		ReceptedTestDataParameter receptedparameter = new ReceptedTestDataParameter();
 		receptedparameter.setTestreceptionid(testreceptionid);
 		receptedparameter.setTestdataidlist(arr);
@@ -290,22 +293,10 @@ public class ReceptionController {
 	public  int RemoveReceptionTreatment(@RequestBody Map<String,Integer> obj) {
 		return treatmentsService.deleteTreatment(obj.get("treatmentid"));
 	}
-	//테스트
-	@GetMapping("/test")
-	public List<Object> test(int treatmentid, int patientid) {
-		List<String> tlist = receptionsService.GetPrescriptionTestDataByTreatmentid(treatmentid);
-		List<String> plist = receptionsService.GetPrescriptionTestDataByPatientid(patientid);
-		List<Object> list = new ArrayList<Object>();
-		list.add(tlist);
-		list.add(plist);
-		return list;
-	}
-	
-	
+
 	@RequestMapping("/sendRedisMessage")
 	public void sendRedisMessage(String topic, String content, HttpServletResponse response) {
-		try {			
-			System.out.println(topic + " " + content);
+		try {
 			redisTemplate.convertAndSend(topic, content);
 			response.setContentType("application/json; charset=UTF-8");
 			PrintWriter pw = response.getWriter();
@@ -321,21 +312,48 @@ public class ReceptionController {
 		
 	}
 	
-	//채팅정보 저장하기
+	//채팅기록 저장하기
 	@PostMapping("/savechatting")
-	public void SaveChatting(@RequestBody List<Map<String,Object>> list, HttpServletResponse response) {
+	public void SaveChatting(@RequestBody Map<String,Object>json, HttpServletResponse response) {
 		try {
 			redisTemplate.setKeySerializer(new StringRedisSerializer());
 
 			redisTemplate.setValueSerializer(new GenericJackson2JsonRedisSerializer());
-			ValueOperations<String,List<Map<String,Object>>> listOpertions =  redisTemplate.opsForValue();
-			redisTemplate.delete("chatArray");
-			listOpertions.set("chatArray", list);
-			response.setContentType("application/json; charset=UTF-8");
-			PrintWriter pw = response.getWriter();
+			String userid = json.get("userid").toString();
+			String chatArrayst =  json.get("chatArray").toString();
+			if(chatArrayst.equals("\"\"")) {
+				System.out.println("빈 채팅기록이 들어왔습니다");
+				return;
+			}
+			ObjectMapper mapper = new ObjectMapper();
 			
+			List<Map<String,Object>> chatArray = Arrays.asList(mapper.readValue(chatArrayst, Map[].class));
+			if(chatArray.size()<1) {
+				System.out.println("빈 채팅기록이 들어왔습니다");
+				return;
+			}
+			ValueOperations<String,List<Map<String,Object>>> listOpertions =  redisTemplate.opsForValue();
+			//해당 유저의 채팅기록 메모리에서 삭제
+			redisTemplate.delete(userid);
+			//해당 유저의 채팅기록 메모리에 저장
+			listOpertions.set(userid, chatArray);
+			
+			
+			//db에서 삭제
+			chattingsHistoryService.RemoveChattingHistory(userid);
+			
+			//db에 저장
+			ChattingHistory chattingHistory = new ChattingHistory();
+			chattingHistory.setUserid(userid);
+			String jsonStr = mapper.writeValueAsString(chatArray);
+			chattingHistory.setHistory(jsonStr);
+			chattingsHistoryService.PushChattingHistory(chattingHistory);
+			
+			
+			
+			PrintWriter pw = response.getWriter();
 			JSONObject jsonObject = new JSONObject();
-			jsonObject.put("result", "success");
+			response.setContentType("application/json; charset=UTF-8");
 			pw.println(jsonObject.toString());
 			pw.flush();
 			pw.close();
@@ -344,19 +362,68 @@ public class ReceptionController {
 		}
 		
 	}
-	//채팅정보 불러오기
-	@GetMapping("/loadchatting")
-	public List<Map<String,Object>> LoadChatting() {
-		redisTemplate.setKeySerializer(new StringRedisSerializer());
-
-		redisTemplate.setValueSerializer(new GenericJackson2JsonRedisSerializer());
-		ValueOperations<String,List<Map<String,Object>>> valueOpertions =  redisTemplate.opsForValue();
-		List<Map<String,Object>> list = valueOpertions.get("chatArray");
-		if(list==null) {
-			list= new ArrayList<Map<String,Object>>();
-		}
-		return list;
+	//채팅기록 삭제하기
+	@GetMapping("/clearchatting/{userid}")
+	public void clearChatting(@PathVariable String userid, HttpServletResponse response) {
+		try {
 		
+		redisTemplate.setKeySerializer(new StringRedisSerializer());
+		redisTemplate.setValueSerializer(new GenericJackson2JsonRedisSerializer());
+		//해당 유저의 채팅기록 메모리에서 삭제
+		boolean result = redisTemplate.delete(userid);
+		//db에서 삭제
+		chattingsHistoryService.RemoveChattingHistory(userid);
+		response.setContentType("application/json; charset=UTF-8");
+		PrintWriter pw = response.getWriter();
+		
+		JSONObject jsonObject = new JSONObject();
+		
+		jsonObject.put("result", result?"Clear success":"Clear fail");
+		pw.println(jsonObject.toString());
+		pw.flush();
+		pw.close();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		
+	}
+	//채팅기록 불러오기
+	@GetMapping("/loadchatting/{userid}")
+	public List<Map<String,Object>> LoadChatting(@PathVariable String userid) {
+		List<Map<String,Object>> list = null;
+		try {
+			
+			redisTemplate.setKeySerializer(new StringRedisSerializer());
+			redisTemplate.setValueSerializer(new GenericJackson2JsonRedisSerializer());
+			ValueOperations<String,List<Map<String,Object>>> valueOpertions =  redisTemplate.opsForValue();
+			list = valueOpertions.get(userid);
+			
+			//만약 메모리에 해당 유저의 채팅기록이 있으면 바로 가져옴 
+			if(list!=null) {
+				return list;
+			}
+			//만약 없으면 DB에서 가져옴
+			else {
+				ObjectMapper mapper = new ObjectMapper();
+				//db에서 가져오기
+				ChattingHistory chattinghistory =  chattingsHistoryService.GetChattingHistory(userid);
+				if(chattinghistory==null ) {
+					System.out.println("db에 채팅기록 데이터가 없습니다");
+					return list;
+				}
+				String json = chattinghistory.getHistory();
+				list = Arrays.asList(mapper.readValue(json, Map[].class));
+				System.out.println("load from db");
+				return list;
+			}
+			
+						
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		return list;
 		
 	}
 	//userid로 user불러오기
@@ -386,12 +453,6 @@ public class ReceptionController {
 		
 		return jsonObject.toMap();
 	}
-	
-	
-	@GetMapping("/test1")
-	public void test() {
-		patientservice.UpdateLastTreatment(10);
-		
-	}
+
 	
 }

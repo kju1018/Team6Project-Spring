@@ -43,7 +43,7 @@ public class ChattingWebSocket extends TextWebSocketHandler {
 	//WebSocket ----------------------------------------------------------------------
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
-		logger.info("afterConnectionEstablished: " + session.getId());
+		//logger.info("afterConnectionEstablished: " + session.getId());
 		Client client = new Client(session);
 		clients.add(new Client(session));
 		Iterator<Client> iterator = clients.iterator();
@@ -58,13 +58,11 @@ public class ChattingWebSocket extends TextWebSocketHandler {
 		String strJson = message.getPayload();
 		JSONObject jsonObject = new JSONObject(strJson);
 		String header = jsonObject.getString("header");
-		String from = jsonObject.getString("from");
-		String content = jsonObject.getString("message");
 		Object[] array=null;
 		
 			//접속 패킷 받았을때
 			if(header.equals("HELLO")) {
-				System.out.println("HELLO");
+				//System.out.println("HELLO");
 				ObjectMapper mapper = new ObjectMapper();
 				//받은 정보를 connectionInfo로 변환
 				ChattingConnectionInfo connectionInfo = mapper.readValue(jsonObject.get("connectioninfo").toString(),ChattingConnectionInfo.class );
@@ -104,7 +102,7 @@ public class ChattingWebSocket extends TextWebSocketHandler {
             	
             	
             	
-            	System.out.println("btye"+ jsonObject.toString());
+            	//System.out.println("btye"+ jsonObject.toString());
             	
             	
             	ObjectMapper mapper = new ObjectMapper();
@@ -122,7 +120,7 @@ public class ChattingWebSocket extends TextWebSocketHandler {
             }
 			//채팅 패킷 받았을때
 			else if(header.equals("CHATTING")){
-				System.out.println("CHATTING");
+				//System.out.println("CHATTING");
 				for(Client client : clients) {
 					client.session.sendMessage(message);
 				}	
@@ -133,7 +131,7 @@ public class ChattingWebSocket extends TextWebSocketHandler {
 	
 	@Override
 	public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
-		logger.info("afterConnectionClosed: " + session.getId());
+		//logger.info("afterConnectionClosed: " + session.getId());
 		//커넥션맵에서 삭제
 		ConnectionMap.remove(session.getId());
 		//커넥션맵을 Array시킴
@@ -144,7 +142,7 @@ public class ChattingWebSocket extends TextWebSocketHandler {
 		jsonObject.put("header", "BYE");
 		//연결정보를 JSONObject에 추가
 		jsonObject.put("connectionlist", array);
-		System.out.println(jsonObject);
+		//System.out.println(jsonObject);
 		
 		
 		
