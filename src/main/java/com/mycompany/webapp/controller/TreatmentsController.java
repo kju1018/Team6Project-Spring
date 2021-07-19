@@ -70,19 +70,7 @@ public class TreatmentsController {
 	@Autowired
 	private TestImgsService testImgsService;
 	
-//	@PostMapping("/test")
-//	public String test() {
-//		Treatment treatment = new Treatment();
-//		treatment.setPatientid(1);
-//		treatment.setMemo("");
-//		treatment.setStatus("진료 대기");
-//		treatment.setTreatmentdate(new Date());
-//		treatment.setUserid("user1");
-//		Treatment newTreatment = treatmentsService.create(treatment);
-//		System.out.println(newTreatment);
-//		return "test";
-//	}
-	
+	//환자별 진료 리스트 가져오기
 	@GetMapping("/treatments/{patientid}")
 	public List<Treatment> getTreatmentList(@PathVariable String patientid) {
 		
@@ -94,6 +82,7 @@ public class TreatmentsController {
 			
 		}	
 	}
+	
 	//처방받은 내역 불러오기
 	@GetMapping("/getprescription/{treatmentid}")
 	public Map<String, List> getPrescriptionList(@PathVariable int treatmentid) {
