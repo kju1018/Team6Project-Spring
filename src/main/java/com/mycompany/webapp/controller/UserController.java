@@ -37,28 +37,33 @@ public class UserController {
 		return list;
 	}
 	
+	//직원 등록
 	@PostMapping("/join")
 	public Map<String, String> join(@RequestBody User user) {
 		return usersService.join(user);
 		 
 	}
 	
+	//직원 수정
 	@PostMapping("/update")
 	public Map<String, String> update(@RequestBody User user) {
 		return usersService.updateUser(user);
 	}
 	
+	//직원 삭제
 	@DeleteMapping("/delete/{userid}")
 	public Map<String, String> delete(@PathVariable String userid) {
 		return usersService.deletUser(userid);
 	}
 	
+	//직원 비활성화
 	@PutMapping("/disable/{userid}")
 	public Map<String, String> disable(@PathVariable String userid) {
 		return usersService.disable(userid);
 	
 	}
 
+	//직원 활성화
 	@PutMapping("/enable/{userid}")
 	public Map<String, String> enable(@PathVariable String userid) {
 		return usersService.enable(userid);
