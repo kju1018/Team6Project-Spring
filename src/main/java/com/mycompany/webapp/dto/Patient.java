@@ -12,9 +12,9 @@ public class Patient {
 	String sex;
 	int age;
 	String phonenumber;
-	@JsonFormat(pattern="yyyy-MM-dd")
+	@JsonFormat(pattern="yyyy-MM-dd", timezone = "Asia/Seoul")
 	Date lasttreatment;
-	@JsonFormat(pattern="yyyy-MM-dd")
+	@JsonFormat(pattern="yyyy-MM-dd", timezone = "Asia/Seoul")
 	Date registerday;
 	int codenumber;
 	int enabled;
