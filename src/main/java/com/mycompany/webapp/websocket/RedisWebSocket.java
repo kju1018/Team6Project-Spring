@@ -44,7 +44,7 @@ public class RedisWebSocket extends TextWebSocketHandler
 	//WebSocket ----------------------------------------------------------------------
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
-		logger.info("afterConnectionEstablished: " + session.getId());
+		//logger.info("afterConnectionEstablished: " + session.getId());
 		Client client = new Client(session);
 		clients.add(new Client(session));
 	}
@@ -54,7 +54,7 @@ public class RedisWebSocket extends TextWebSocketHandler
 		String strJson = message.getPayload();
 		JSONObject jsonObject = new JSONObject(strJson); 
 		String topic = jsonObject.getString("topic");
-		logger.info("handleTextMessage: " + topic);
+		//logger.info("handleTextMessage: " + topic);
 		for(Client client : clients) {
 			if(client.session.getId() == session.getId()) {
 				client.topic = topic;
@@ -65,7 +65,7 @@ public class RedisWebSocket extends TextWebSocketHandler
 	
 	@Override
 	public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
-		logger.info("afterConnectionClosed: " + session.getId());
+		//logger.info("afterConnectionClosed: " + session.getId());
 		Iterator<Client> iterator = clients.iterator();
 		while(iterator.hasNext()) {
 			Client client = iterator.next();
@@ -79,7 +79,7 @@ public class RedisWebSocket extends TextWebSocketHandler
 	//Redis 메시지 구독(Subscribe) 메소드
 	@Override
 	public void onMessage(Message message, byte[] pattern) {
-		logger.info(message.toString());
+		//logger.info(message.toString());
 		pushMessage(message);
 	}	
 	

@@ -17,6 +17,7 @@
    	<typeAlias type="com.mycompany.webapp.dto.TestImg" alias="testimg"/>
    	<typeAlias type="com.mycompany.webapp.dto.ReceptedTestDataParameter" alias="receptedtestdataparameter"/>
 	<typeAlias type="com.mycompany.webapp.dto.Code" alias="code"/>
+	<typeAlias type="com.mycompany.webapp.dto.ChattingHistory" alias="chattinghistory"/>
 	
    </typeAliases>
 </configuration>
