@@ -1,9 +1,13 @@
 package com.mycompany.webapp.controller;
 
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,7 +37,7 @@ public class MainHomeController {
 
 	//전체공지 불러오기
 	@GetMapping("/NoticeList")
-	//public 넘겨줄데이터타입 함수이름(마음대로 정해도돼)
+	//public 넘겨줄데이터타입 함수이름(받을데이터)
 	public List<Notice> NoticeList(){
 		List<Notice> list = noticesService.getNoticeList();
 		return list;
@@ -61,9 +65,31 @@ public class MainHomeController {
 	}
 	
 	//'스케줄' 불러오기
-	@GetMapping("/ScheduleList")
-	public List<Schedule> ScheduleList(){
-		List<Schedule> list = schedulesService.getScheduleList();
+	@GetMapping("/ScheduleList/{startDate}")
+	public List<Schedule> ScheduleList(@PathVariable @DateTimeFormat(pattern="yyyy-MM-dd") String startDate){
+		//클래스명 이름 = new 클래스명(); - 기본 자바 상식
+		
+		//moment 간단한방법
+		System.out.println(startDate);
+		
+		List<Schedule> list = schedulesService.getScheduleList(startDate);
+		return list;
+	}
+	
+	//'스케줄 등록' 버튼 클릭
+	@PostMapping("/scheduleUpdate")
+	public Map<String, String> scheduleUpdate(@RequestBody Schedule schedule) {
+		return schedulesService.scheduleUpdate(schedule);
+	}
+	
+	//'스케줄 삭제' 버튼 클릭
+	@GetMapping("/scheduleDelete/{scheduleid}/{startDate}")
+	public List<Schedule> deleteSchedule(@PathVariable String scheduleid, @PathVariable @DateTimeFormat(pattern="yyyy-MM-dd") String startDate) {
+		System.out.println(scheduleid);
+		System.out.println(startDate);
+		int value = Integer.parseInt(scheduleid);
+		schedulesService.deleteSchedule(value);
+		List<Schedule> list = schedulesService.getScheduleList(startDate);
 		return list;
 	}
 	

@@ -2,9 +2,21 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.mycompany.webapp.dao.SchedulesDao">
 
-	<select id="selectAll" resultType="schedule">
+	<select id="selectAll" parameterType="string" resultType="schedule">
 		select scheduleid, content, date, userid
 		from SCHEDULES
+		where date= #{startDate}
 	</select>
 
+	<insert id="insert" useGeneratedKeys = "true" keyProperty="scheduleid" parameterType="schedule">
+		insert into schedules
+		(scheduleid, content, date, userid)
+		values
+		(#{scheduleid}, #{content}, #{date}, #{userid})
+	</insert>
+	
+	<delete id="deleteSchedule">
+		delete from Schedules
+		where scheduleid=#{scheduleid}
+	</delete>
 </mapper>

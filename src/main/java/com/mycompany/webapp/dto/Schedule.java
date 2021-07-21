@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 public class Schedule {
 	private int scheduleid;
 	private String content;
-	@JsonFormat(pattern="yyyy-MM-dd")
+	@JsonFormat(pattern="yyyy-MM-dd", timezone = "Asia/Seoul")
 	private Date date;
 	private String userid;
 	
