@@ -9,7 +9,7 @@ public class Notice {
 	private String title;
 	private String content;
 	private String userid;
-	@JsonFormat(pattern="yyyy-MM-dd")
+	@JsonFormat(pattern="yyyy-MM-dd", timezone = "Asia/Seoul")
 	private Date date;
 	
 	public int getNoticeid() {
