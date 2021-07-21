@@ -1,0 +1,27 @@
+{
+  "files": {
+    "main.css": "/static/css/main.e913658a.chunk.css",
+    "main.js": "/static/js/main.77fdc190.chunk.js",
+    "main.js.map": "/static/js/main.77fdc190.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.03a0b9f9.js",
+    "runtime-main.js.map": "/static/js/runtime-main.03a0b9f9.js.map",
+    "static/css/2.a41d0e9d.chunk.css": "/static/css/2.a41d0e9d.chunk.css",
+    "static/js/2.099cb5d9.chunk.js": "/static/js/2.099cb5d9.chunk.js",
+    "static/js/2.099cb5d9.chunk.js.map": "/static/js/2.099cb5d9.chunk.js.map",
+    "static/js/3.1ef3f895.chunk.js": "/static/js/3.1ef3f895.chunk.js",
+    "static/js/3.1ef3f895.chunk.js.map": "/static/js/3.1ef3f895.chunk.js.map",
+    "index.html": "/index.html",
+    "static/css/2.a41d0e9d.chunk.css.map": "/static/css/2.a41d0e9d.chunk.css.map",
+    "static/css/main.e913658a.chunk.css.map": "/static/css/main.e913658a.chunk.css.map",
+    "static/js/2.099cb5d9.chunk.js.LICENSE.txt": "/static/js/2.099cb5d9.chunk.js.LICENSE.txt",
+    "static/media/font.css": "/static/media/NotoSansKR-Regular.457762ea.otf",
+    "static/media/bootstrap-icons.css": "/static/media/bootstrap-icons.dfd0ea12.woff2"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.03a0b9f9.js",
+    "static/css/2.a41d0e9d.chunk.css",
+    "static/js/2.099cb5d9.chunk.js",
+    "static/css/main.e913658a.chunk.css",
+    "static/js/main.77fdc190.chunk.js"
+  ]
+}
