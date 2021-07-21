@@ -48,11 +48,13 @@ public class AuthController {
 	private CodesService codesService;
 	
 	@PostMapping("/login")
-	public Map<String, String> userlogin(@RequestBody Map<String, String> user) {
+	public Map<String, Object> userlogin(@RequestBody Map<String, String> user) {
 		String userid = user.get("userid");
 		String upassword = user.get("userpassword");
 		int codenumber = Integer.parseInt(user.get("codenumber"));
-		logger.info(user.toString());
+		logger.info(userid);
+		logger.info(upassword);
+		logger.info(codenumber+"");
 		//사용자 인증하기
 		UsernamePasswordAuthenticationToken authReq = new UsernamePasswordAuthenticationToken(userid, upassword);
 	    Authentication authentication = authenticationManager.authenticate(authReq);
@@ -60,7 +62,7 @@ public class AuthController {
 	    securityContext.setAuthentication(authentication);
 	    
 	    //JSON 응답 보내기
-		Map<String, String> map = new HashMap<>();
+		Map<String, Object> map = new HashMap<>();
 	    //로그인 유저 정보 가져오기
 	    User newUser = usersService.getUser(userid);
 	    
@@ -77,7 +79,8 @@ public class AuthController {
 		map.put("userid", userid);
 		map.put("authToken", authToken);
 		map.put("role_authority", newUser.getRole_authority());
-//		map.put("username", newUser.getUsername());
+		map.put("username", newUser.getUsername());
+		map.put("codenumber", newUser.getCodenumber());
 		return map;
 	}
 	
@@ -91,11 +94,10 @@ public class AuthController {
 		return "success";
 	}
 	
-	@PostMapping("/codelogin")
-	public Map<String, Object> codelogin(@RequestBody Code code){
-		
-		return codesService.codeLogin(code);
-	}
+//	@PostMapping("/codelogin")
+//	public Map<String, Object> codelogin(@RequestBody Code code){
+//		
+//		return codesService.codeLogin(code);
+//	}
 	
-
 }
