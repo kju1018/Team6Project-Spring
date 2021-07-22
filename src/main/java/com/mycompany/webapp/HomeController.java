@@ -18,14 +18,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class HomeController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
-	
-	/**
-	 * Simply selects the home view to render by returning its name.
-	 */
-	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String home(Locale locale, Model model) {
 
-		return "index.html";
+	@RequestMapping(value = {"/", "/main" ,"/main/home", "/main/treatment", "/main/reception"
+				, "/main/test", "/main/members"})
+	public String home() {
+		System.out.println("dsdsd");
+		return "index";
 	}
 	
 }
