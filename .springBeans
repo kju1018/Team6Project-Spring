@@ -10,7 +10,9 @@
 		<config>src/main/webapp/WEB-INF/spring/root/component-scan.xml</config>
 	</configs>
 	<autoconfigs>
-		<config>src/main/webapp/WEB-INF/spring/dispatcher/view-resolver.xml</config>
+		<config>src/main/webapp/WEB-INF/spring/root/datasource.xml</config>
+		<config>src/main/webapp/WEB-INF/spring/root/security.xml</config>
+		<config>src/main/webapp/WEB-INF/spring/dispatcher/multipart-resolver.xml</config>
 		<config>src/main/webapp/WEB-INF/spring/dispatcher/static-resources.xml</config>
 		<config>src/main/webapp/WEB-INF/spring/dispatcher/component-scan.xml</config>
 		<config>src/main/webapp/WEB-INF/spring/dispatcher/redis.xml</config>
