@@ -117,7 +117,7 @@ public class TreatmentsController {
 	 * */
 	//처방받은 내역 저장
 	@PostMapping("/prescribetreatment")
-	public String prescribereatment(@RequestBody HashMap prescription) {
+	public String prescribeTreatment(@RequestBody HashMap prescription) {
 		//map안에 있는 값들 가져오기
 		ObjectMapper mapper = new ObjectMapper();
 		List<Drug> drugList = mapper.convertValue(prescription.get("treatmentDrugs"), new TypeReference<List<Drug>>() { });
@@ -126,7 +126,7 @@ public class TreatmentsController {
 		Treatment nowTreatment = mapper.convertValue(prescription.get("treatment"), Treatment.class);
 		String userid = (String) prescription.get("userid");
 		int patientid = (int) prescription.get("patientid");
-		
+		logger.info(nowTreatment.toString());
 		//test테이블에 넣을 데이터 처리
 		Map<String, Object> testData = new HashMap<String, Object>();
 		testData.put("testList", testList);
@@ -143,6 +143,15 @@ public class TreatmentsController {
 
 		nowTreatment.setStatus("진료 완료");
 		treatmentsService.updateStatus(nowTreatment);
+		return "success";
+	}
+	
+	//진료중 상태로 변경
+	@PutMapping("/updatetreatment")
+	public String updateTreatment(@RequestBody Treatment treatment) {
+		treatment.setStatus("진료중");
+		treatmentsService.updateStatus(treatment);
+		
 		return "success";
 	}
 	
