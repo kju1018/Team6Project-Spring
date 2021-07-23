@@ -23,7 +23,7 @@
 	
 	<!-- 해당 환자 클릭 시, 과거 검사 내역 -->
 	<select id="selectbyPatientid" parameterType="int" resultType="testreception">
-		select testreceptionid, testdate, status, patientid
+		select testreceptionid, testdate, status, patientid, resultstatus
 		from testreceptions
 		where patientid = #{patientid}
 		order by testdate desc
