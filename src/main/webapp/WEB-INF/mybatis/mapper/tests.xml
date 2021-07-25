@@ -4,10 +4,10 @@
 
 	<!-- testreceptionid로 testdate와 testdataid 불러옴 -->
   	<select id="selectbyTestReceptionid" resultType="test">
-  		select t.testdataid, patientid, userid, testreceptionid, result, status,
+  		select t.testdataid, tr.patientid, userid, tr.testreceptionid, result, t.status,
 				testdataname, testcontainer, testtype, groupcode, groupname, testunit, min, max, treatmentid
-		from tests t, testsdatas td 
-		where t.testreceptionid = #{testreceptionid} AND t.testdataid = td.testdataid
+		from tests t, testsdatas td, testreceptions tr
+		where t.testreceptionid = #{testreceptionid} AND t.testdataid = td.testdataid AND tr.patientid = t.patientid
   	</select>
 	
 	<insert id="insertList" parameterType="map">
@@ -21,7 +21,7 @@
 	
 	<insert id="insertresult" parameterType="testimg">
 		update tests
-		set result = "첨부완료"
+		set result = "첨부완료", status = "검사완료"
 		where treatmentid = #{treatmentid} AND testdataid = #{testdataid}
 	</insert>
 	
