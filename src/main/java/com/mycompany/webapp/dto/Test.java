@@ -2,13 +2,20 @@ package com.mycompany.webapp.dto;
 
 
 public class Test {
-	private String status;
-	private String result;
 	private int testreceptionid;
-	private String testdataid;
-	private int reservationid;
-	private int treatmentid;
 	private int patientid;
+	private int treatmentid;
+	private String groupcode;
+	private String groupname;
+	private String testdataid;
+	private String testdataname;
+	private String testtype;
+	private String testcontainer;
+	private String testunit;
+	private String result;
+	private double min;
+	private double max;
+	private String status;
 	private String userid;
 	
 	public String getTestdataname() {
@@ -59,14 +66,6 @@ public class Test {
 	public void setMax(double max) {
 		this.max = max;
 	}
-	private String testdataname;
-	private String testcontainer;
-	private String groupcode;
-	private String testtype;
-	private String groupname;
-	private String testunit;
-	private double min;
-	private double max;
 	
 	public String getStatus() {
 		return status;
@@ -92,12 +91,6 @@ public class Test {
 	public void setTestdataid(String testdataid) {
 		this.testdataid = testdataid;
 	}
-	public int getReservationid() {
-		return reservationid;
-	}
-	public void setReservationid(int reservationid) {
-		this.reservationid = reservationid;
-	}
 	public int getTreatmentid() {
 		return treatmentid;
 	}
@@ -119,7 +112,7 @@ public class Test {
 	@Override
 	public String toString() {
 		return "Test [status=" + status + ", result=" + result + ", testreceptionid=" + testreceptionid
-				+ ", testdataid=" + testdataid + ", reservationid=" + reservationid + ", treatmentid=" + treatmentid
+				+ ", testdataid=" + testdataid + ", treatmentid=" + treatmentid
 				+ ", patientid=" + patientid + ", userid=" + userid + ", testdataname=" + testdataname
 				+ ", testcontainer=" + testcontainer + ", groupcode=" + groupcode + ", testtype=" + testtype
 				+ ", groupname=" + groupname + ", testunit=" + testunit + ", min=" + min + ", max=" + max + "]";
