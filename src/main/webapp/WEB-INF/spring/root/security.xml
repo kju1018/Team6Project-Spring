@@ -30,7 +30,7 @@
 	
 		<!-- 요청 경로 권한 설정 -->
 		<security:intercept-url pattern="/auth/test" access="hasRole('ROLE_ADMIN')" method="GET"/>
-		
+		<security:intercept-url pattern="/auth/test" access="hasRole('ROLE_ADMIN')" method="GET"/>
 		<security:intercept-url pattern="/**" access="permitAll"/>
 	</security:http>
 	
@@ -98,8 +98,8 @@
 			<bean class="org.springframework.security.access.hierarchicalroles.RoleHierarchyImpl">
 				<property name="hierarchy">
 					<value>
-						ROLE_ADMIN > ROLE_MANAGER
-						ROLE_MANAGER > ROLE_USER
+						ROLE_ADMIN > ROLE_DOCTOR
+						ROLE_DOCTOR > ROLE_NURSE
 					</value>
 				</property>
 			</bean>
