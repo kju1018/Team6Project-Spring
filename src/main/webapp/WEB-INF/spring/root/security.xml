@@ -29,8 +29,38 @@
 		<security:custom-filter ref="jwtAuthenticationFilter" before="BASIC_AUTH_FILTER" />		
 	
 		<!-- 요청 경로 권한 설정 -->
-		<security:intercept-url pattern="/auth/test" access="hasRole('ROLE_ADMIN')" method="GET"/>
-		<security:intercept-url pattern="/auth/test" access="hasRole('ROLE_ADMIN')" method="GET"/>
+		
+		<security:intercept-url pattern="/user/join" access="hasRole('ROLE_ADMIN')" method="POST"/>
+		<security:intercept-url pattern="/user/update" access="hasRole('ROLE_ADMIN')" method="POST"/>
+		<security:intercept-url pattern="/user/delete/*" access="hasRole('ROLE_ADMIN')" method="DELETE"/>
+		<security:intercept-url pattern="/user/disable/*" access="hasRole('ROLE_ADMIN')" method="PUT"/>
+		<security:intercept-url pattern="/user/enable/*" access="hasRole('ROLE_ADMIN')" method="PUT"/>
+		
+		<security:intercept-url pattern="/test/*" access="hasAnyRole('ROLE_DOCTOR, ROLE_ADMIN')" method="PUT"/>
+		<security:intercept-url pattern="/test/*" access="hasAnyRole('ROLE_DOCTOR, ROLE_ADMIN')" method="GET"/>
+		<security:intercept-url pattern="/test/*" access="hasAnyRole('ROLE_DOCTOR, ROLE_ADMIN')" method="POST"/>
+		
+		<security:intercept-url pattern="/treatment/*" access="hasAnyRole('ROLE_DOCTOR, ROLE_ADMIN')" method="PUT"/>
+		<security:intercept-url pattern="/treatment/*" access="hasAnyRole('ROLE_DOCTOR, ROLE_ADMIN')" method="GET"/>
+		<security:intercept-url pattern="/treatment/*" access="hasAnyRole('ROLE_DOCTOR, ROLE_ADMIN')" method="POST"/>
+		
+		
+		<security:intercept-url pattern="/reception/reservationlist" access="hasAnyRole('ROLE_NURSE, ROLE_ADMIN')" method="GET"/>
+		<security:intercept-url pattern="/reception/registerreservation" access="hasAnyRole('ROLE_NURSE, ROLE_ADMIN')" method="POST"/>		
+		<security:intercept-url pattern="/reception/removereservation" access="hasAnyRole('ROLE_NURSE, ROLE_ADMIN')" method="DELETE"/>
+		<security:intercept-url pattern="/reception/updatereservation" access="hasAnyRole('ROLE_NURSE, ROLE_ADMIN')" method="PUT"/>
+		<security:intercept-url pattern="/reception/patientlist" access="hasAnyRole('ROLE_NURSE, ROLE_ADMIN')" method="GET"/>
+		<security:intercept-url pattern="/reception/getpatient" access="hasAnyRole('ROLE_NURSE, ROLE_ADMIN')" method="GET"/>
+		<security:intercept-url pattern="/reception/registerpatient" access="hasAnyRole('ROLE_NURSE, ROLE_ADMIN')" method="POST"/>
+		<security:intercept-url pattern="/reception/updatepatient" access="hasAnyRole('ROLE_NURSE, ROLE_ADMIN')" method="PUT"/>
+		<security:intercept-url pattern="/reception/treatments/*" access="hasAnyRole('ROLE_NURSE, ROLE_ADMIN')" method="GET"/>
+		<security:intercept-url pattern="/reception/treatmentdetail" access="hasAnyRole('ROLE_NURSE, ROLE_ADMIN')" method="GET"/>
+		<security:intercept-url pattern="/reception/prescriptiontest" access="hasAnyRole('ROLE_NURSE, ROLE_ADMIN')" method="GET"/>
+		<security:intercept-url pattern="/reception/receptiontreatment" access="hasAnyRole('ROLE_NURSE, ROLE_ADMIN')" method="POST"/>
+		<security:intercept-url pattern="/reception/receptiontest" access="hasAnyRole('ROLE_NURSE, ROLE_ADMIN')" method="POST"/>
+		<security:intercept-url pattern="/reception/removetestreception" access="hasAnyRole('ROLE_NURSE, ROLE_ADMIN')" method="DELETE"/>
+		<security:intercept-url pattern="/reception/removereceptiontreatment" access="hasAnyRole('ROLE_NURSE, ROLE_ADMIN')" method="DELETE"/>
+	
 		<security:intercept-url pattern="/**" access="permitAll"/>
 	</security:http>
 	
