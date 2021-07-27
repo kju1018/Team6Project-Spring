@@ -59,8 +59,10 @@ public class MainHomeController {
 	
 	//'유저리스트' 불러오기
 	@GetMapping ("/userList")
-	public List<User> userList(){
-		List<User> list = usersService.getUserList("의사");
+	public List<User> userList(String usertype){
+		System.out.println(usertype);
+		List<User> list = usersService.getUserList(usertype);
+		
 		return list;
 	}
 	
