@@ -4,7 +4,7 @@
 
 	<!-- testreceptionid로 testdate와 testdataid 불러옴 -->
   	<select id="selectbyTestReceptionid" resultType="test">
-  		select t.testdataid, t.patientid, userid, testreceptionid, result, t.status, patientname
+  		select t.testdataid, t.patientid, userid, testreceptionid, result, t.status, patientname,
 				testdataname, testcontainer, testtype, groupcode, groupname, testunit, min, max, treatmentid
 		from tests t, testsdatas td, patients p
 		where t.testreceptionid = #{testreceptionid} AND t.testdataid = td.testdataid AND t.patientid = p.patientid
